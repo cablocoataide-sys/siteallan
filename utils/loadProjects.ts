@@ -10,7 +10,7 @@ interface SanityProject {
   gallery: Array<{
     _key: string;
     asset: any;
-    type: 'square' | 'wide';
+    type?: 'square' | 'wide';
     alt?: string;
   }>;
   about: { pt: string; en: string };
@@ -54,14 +54,14 @@ export const loadProjects = async (lang: 'pt' | 'en'): Promise<Project[]> => {
       title: project.title[lang],
       description: project.description[lang],
       tags: project.tags,
-      image: urlFor(project.thumbnail).width(1200).height(1200).url(),
+      image: urlFor(project.thumbnail).width(1080).height(1080).url(),
       color: generateColor(index),
       images: {
-        thumbnail: urlFor(project.thumbnail).width(1200).height(1200).url(),
+        thumbnail: urlFor(project.thumbnail).width(1080).height(1080).url(),
         gallery: project.gallery.map((img) => 
           urlFor(img.asset)
-            .width(img.type === 'wide' ? 2400 : 1200)
-            .height(img.type === 'wide' ? 1200 : 1200)
+            .width((img.type === 'wide') ? 2160 : 1080)
+            .height(1080)
             .url()
         ),
       },
