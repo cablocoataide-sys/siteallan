@@ -1,0 +1,68 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": {
+        "pt": "Seu Projeto 1",
+        "en": "Your Project 1"
+      },
+      "description": {
+        "pt": "Descrição do seu projeto em português",
+        "en": "Your project description in English"
+      },
+      "tags": ["Product Design", "Fintech", "Mobile App"],
+      "images": {
+        "thumbnail": "/projects/projeto-1/thumbnail.jpg",
+        "gallery": [
+          "/projects/projeto-1/wide-1.jpg",
+          "/projects/projeto-1/square-1.jpg",
+          "/projects/projeto-1/square-2.jpg",
+          "/projects/projeto-1/wide-2.jpg",
+          "/projects/projeto-1/square-3.jpg",
+          "/projects/projeto-1/square-4.jpg",
+          "/projects/projeto-1/wide-3.jpg"
+        ]
+      },
+      "about": {
+        "pt": "Texto sobre o projeto em português. Explique o contexto, desafios e sua abordagem.",
+        "en": "Text about the project in English. Explain the context, challenges and your approach."
+      },
+      "results": {
+        "pt": "Resultados do projeto em português. Fale sobre o impacto, métricas e feedback.",
+        "en": "Project results in English. Talk about impact, metrics and feedback."
+      }
+    },
+    {
+      "id": 2,
+      "title": {
+        "pt": "Seu Projeto 2",
+        "en": "Your Project 2"
+      },
+      "description": {
+        "pt": "Descrição do segundo projeto",
+        "en": "Second project description"
+      },
+      "tags": ["UI/UX", "SaaS", "Healthcare"],
+      "images": {
+        "thumbnail": "/projects/projeto-2/thumbnail.jpg",
+        "gallery": [
+          "/projects/projeto-2/wide-1.jpg",
+          "/projects/projeto-2/square-1.jpg",
+          "/projects/projeto-2/square-2.jpg",
+          "/projects/projeto-2/wide-2.jpg",
+          "/projects/projeto-2/square-3.jpg",
+          "/projects/projeto-2/square-4.jpg",
+          "/projects/projeto-2/wide-3.jpg"
+        ]
+      },
+      "about": {
+        "pt": "Sobre o segundo projeto...",
+        "en": "About the second project..."
+      },
+      "results": {
+        "pt": "Resultados do segundo projeto...",
+        "en": "Second project results..."
+      }
+    }
+  ]
+}
