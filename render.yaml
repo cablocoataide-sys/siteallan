@@ -4,18 +4,17 @@ services:
     name: strapi-cms
     env: node
     plan: free
+    repo: https://github.com/cablocoataide-sys/siteallan
     buildCommand: cd strapi-cms && npm install && npm run build
     startCommand: cd strapi-cms && npm run start
     envVars:
-      - key: NODE_VERSION
-        value: 20.11.0
+      - key: NODE_ENV
+        value: production
       - key: CLOUDINARY_NAME
         sync: false
       - key: CLOUDINARY_KEY
         sync: false
       - key: CLOUDINARY_SECRET
-        sync: false
-      - key: GEMINI_API_KEY
         sync: false
       - key: APP_KEYS
         generateValue: true
@@ -27,3 +26,30 @@ services:
         generateValue: true
       - key: JWT_SECRET
         generateValue: true
+      - key: DATABASE_CLIENT
+        value: postgres
+      - key: DATABASE_URL
+        fromDatabase:
+          name: strapi-db
+          property: connectionString
+
+  # Frontend (Static Site)
+  - type: static
+    name: site-portfolio
+    env: static
+    plan: free
+    repo: https://github.com/cablocoataide-sys/siteallan
+    buildCommand: npm install && npm run build
+    publishDir: dist
+    envVars:
+      - key: VITE_STRAPI_URL
+        fromService:
+          type: web
+          name: strapi-cms
+          envVarKey: RENDER_EXTERNAL_URL
+
+databases:
+  - name: strapi-db
+    plan: free
+    databaseName: strapi
+    user: strapi
