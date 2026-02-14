@@ -1,0 +1,15 @@
+
+# Strapi default
+.tmp/
+.cache/
+build/
+dist/
+node_modules/
+.env
+package-lock.json
+
+# Public assets (keep uploads local if needed, but usually ignored in prod if using cloud)
+public/uploads/
+
+# OS specific
+.DS_Store
