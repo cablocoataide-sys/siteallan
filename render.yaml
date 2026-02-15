@@ -36,10 +36,14 @@ services:
   # Frontend (Static Site)
   - type: web
     name: site-portfolio
-    env: static
+    runtime: static
     repo: https://github.com/cablocoataide-sys/siteallan
     buildCommand: npm install && npm run build
     staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
     envVars:
       - key: NODE_VERSION
         value: 20
