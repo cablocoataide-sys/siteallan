@@ -36,11 +36,13 @@ services:
   # Frontend (Static Site)
   - type: web
     name: site-portfolio
-    runtime: static
+    env: static
     repo: https://github.com/cablocoataide-sys/siteallan
     buildCommand: npm install && npm run build
-    staticPublishPath: ./dist
+    staticPublishPath: dist
     envVars:
+      - key: NODE_VERSION
+        value: 20
       - key: VITE_STRAPI_URL
         fromService:
           type: web
