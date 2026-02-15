@@ -35,7 +35,7 @@ services:
 
   # Frontend (Static Site)
   - type: web
-    name: site-portfolio
+    name: allan-portfolio
     runtime: static
     repo: https://github.com/cablocoataide-sys/siteallan
     buildCommand: npm install && npm run build
