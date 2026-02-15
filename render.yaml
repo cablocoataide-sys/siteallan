@@ -34,10 +34,8 @@ services:
           property: connectionString
 
   # Frontend (Static Site)
-  - type: web
+  - type: static
     name: site-portfolio
-    env: static
-    plan: free
     repo: https://github.com/cablocoataide-sys/siteallan
     buildCommand: npm install && npm run build
     publishDir: dist
