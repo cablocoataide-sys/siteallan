@@ -31,36 +31,32 @@ const generateColor = (index: number): string => {
 };
 
 export const loadProjects = async (lang: 'pt' | 'en'): Promise<Project[]> => {
+  const getUrl = (media: any) => {
+    if (!media) return '';
+    const url = media.url;
+    if (!url) return '';
+    if (url.startsWith('http')) return url;
+    return `${STRAPI_URL}${url}`;
+  };
+
   try {
-    // Populate * to get images and relations
     const response = await fetchFromStrapi('/api/projects?populate=*&sort=order:asc');
     const data = response.data;
 
-    return data.map((item: any, index: number) => {
-      const project = item; // Strapi v5 structure might be different, assuming v4/v5 standard response
-      // Strapi Data access depends on version. fetchFromStrapi returns json.
-      // responding to typical Strapi structure: { data: [ { id, attributes: { ... } } ] } (v4)
-      // or { data: [ { id, ... } ] } (v5 with flat simplified response? No, usually attributes in v4).
-      // Let's assume v5 or flattened. If v4, we need item.attributes.
-      // Let's try to handle both or assume standard.
-      // Going with a flatter structure assumption or checking.
-      const attrs = project.attributes || project;
-
+    return data.map((project: any, index: number) => {
       return {
-        id: item.id,
-        title: lang === 'pt' ? attrs.title_pt : attrs.title_en,
-        description: lang === 'pt' ? attrs.description_pt : attrs.description_en,
-        tags: attrs.tags ? attrs.tags.split(',').map((t: string) => t.trim()) : [],
-        image: attrs.thumbnail?.data ? `${STRAPI_URL}${attrs.thumbnail.data.attributes?.url || attrs.thumbnail.data.url}` : '',
+        id: project.id,
+        title: lang === 'pt' ? project.title_pt : project.title_en,
+        description: lang === 'pt' ? project.description_pt : project.description_en,
+        tags: project.tags ? project.tags.split(',').map((t: string) => t.trim()) : [],
+        image: getUrl(project.thumbnail),
         color: generateColor(index),
         images: {
-          thumbnail: attrs.thumbnail?.data ? `${STRAPI_URL}${attrs.thumbnail.data.attributes?.url || attrs.thumbnail.data.url}` : '',
-          gallery: attrs.gallery?.data ? attrs.gallery.data.map((img: any) =>
-            `${STRAPI_URL}${img.attributes?.url || img.url}`
-          ) : [],
+          thumbnail: getUrl(project.thumbnail),
+          gallery: project.gallery ? project.gallery.map((img: any) => getUrl(img)) : [],
         },
-        about: lang === 'pt' ? attrs.about_pt : attrs.about_en,
-        results: lang === 'pt' ? attrs.results_pt : attrs.results_en,
+        about: lang === 'pt' ? project.about_pt : project.about_en,
+        results: lang === 'pt' ? project.results_pt : project.results_en,
       };
     });
   } catch (error) {
@@ -69,8 +65,9 @@ export const loadProjects = async (lang: 'pt' | 'en'): Promise<Project[]> => {
     try {
       const response = await fetch('/projects.json');
       const data = await response.json();
+      if (!data.projects) return [];
       return data.projects.map((project: any, index: number) => ({
-        id: index + 1,
+        id: project.id || index + 1,
         title: project.title[lang],
         description: project.description[lang],
         tags: project.tags,
