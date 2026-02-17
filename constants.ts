@@ -22,7 +22,7 @@ export const CONTENT: Record<'en' | 'pt', Content> = {
     projectsSub: "Selected Work",
     footerHeadline: "Let's build something meaningful together.",
     footerAbout: "Call me Allan Rolim, Product Designer focused on clear interfaces and timeless visual identities uniting strategy, form and purpose worldwide.",
-    ctaButton: "Fale comigo",
+    ctaButton: "Get in touch",
     ctaSub: "Start a conversation",
     location: "Based in Brazil, working remotely worldwide.",
     marqueeText1: "Based in Brazil",
