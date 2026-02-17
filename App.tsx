@@ -40,13 +40,15 @@ const App: React.FC = () => {
     const fetchProjects = async () => {
       setIsLoading(true);
       const projects = await loadProjects(lang);
-      setCurrentContent({
-        ...CONTENT[lang],
-        projects
-      });
+      if (projects && projects.length > 0) {
+        setCurrentContent(prev => ({
+          ...prev,
+          projects
+        }));
+      }
       setIsLoading(false);
     };
-    
+
     fetchProjects();
   }, [lang]);
 
@@ -54,11 +56,11 @@ const App: React.FC = () => {
   useEffect(() => {
     const root = window.document.documentElement;
     root.classList.remove('dark');
-    
+
     if (theme === 'dark') {
       root.classList.add('dark');
     }
-    
+
     try {
       window.localStorage.setItem('theme', theme);
     } catch {
@@ -70,27 +72,19 @@ const App: React.FC = () => {
     setTheme(prev => prev === 'light' ? 'dark' : 'light');
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen w-full bg-stone-50 dark:bg-stone-950 flex items-center justify-center">
-        <div className="text-stone-900 dark:text-stone-50">Carregando...</div>
-      </div>
-    );
-  }
-
   return (
     <Router>
       <div className="min-h-screen w-full bg-stone-50 dark:bg-stone-950 selection:bg-[#0000FF] selection:text-white transition-all duration-300">
-        
-        <Header 
-          theme={theme} 
-          toggleTheme={toggleTheme} 
+
+        <Header
+          theme={theme}
+          toggleTheme={toggleTheme}
           lang={lang}
           setLang={setLang}
         />
 
         <AnimatePresence mode="wait">
-          <motion.main 
+          <motion.main
             key={lang}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
