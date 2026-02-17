@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Header from './components/Header';
 import Home from './pages/Home';
 import ProjectDetail from './pages/ProjectDetail';
+import LoadingScreen from './components/LoadingScreen';
 import { CONTENT } from './constants';
 import { loadProjects } from './utils/loadProjects';
 import { Theme, Language, Content } from './types';
@@ -34,6 +35,7 @@ const App: React.FC = () => {
   const [lang, setLang] = useState<Language>('pt');
   const [currentContent, setCurrentContent] = useState<Content>(CONTENT[lang]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showLoading, setShowLoading] = useState(true);
 
   // Carrega projetos do JSON
   useEffect(() => {
@@ -75,28 +77,45 @@ const App: React.FC = () => {
     <Router>
       <div className="min-h-screen w-full bg-stone-50 dark:bg-stone-950 selection:bg-[#0000FF] selection:text-white transition-all duration-300">
 
-        <Header
-          theme={theme}
-          toggleTheme={toggleTheme}
-          lang={lang}
-          setLang={setLang}
-          content={currentContent}
-        />
-
         <AnimatePresence mode="wait">
-          <motion.main
-            key={lang}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="w-full"
-          >
-            <Routes>
-              <Route path="/" element={<Home content={currentContent} />} />
-              <Route path="/project/:id" element={<ProjectDetail content={currentContent} />} />
-            </Routes>
-          </motion.main>
+          {showLoading ? (
+            <LoadingScreen
+              key="loader"
+              content={currentContent}
+              onLoadingComplete={() => setShowLoading(false)}
+            />
+          ) : (
+            <motion.div
+              key="app-content"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+            >
+              <Header
+                theme={theme}
+                toggleTheme={toggleTheme}
+                lang={lang}
+                setLang={setLang}
+                content={currentContent}
+              />
+
+              <AnimatePresence mode="wait">
+                <motion.main
+                  key={lang}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="w-full"
+                >
+                  <Routes>
+                    <Route path="/" element={<Home content={currentContent} />} />
+                    <Route path="/project/:id" element={<ProjectDetail content={currentContent} />} />
+                  </Routes>
+                </motion.main>
+              </AnimatePresence>
+            </motion.div>
+          )}
         </AnimatePresence>
       </div>
     </Router>

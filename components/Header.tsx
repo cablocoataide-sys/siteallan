@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Moon, Sun } from 'lucide-react';
 import { Theme, Language, Content } from '../types';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import BrandLogo from './BrandLogo';
 
 interface HeaderProps {
   theme: Theme;
@@ -55,55 +56,48 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
       {/* Container interno com padding fixo */}
       <div className="w-full px-4 md:px-12 flex justify-between items-center gap-4">
         {/* Logo: bolinha azul + Allan Rolim / Voltar com transição suave */}
-        <button
-          onClick={() => navigate('/')}
-          className="flex items-center gap-[0.5em] group cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0"
-        >
-          <motion.div
-            style={{ width: ballSize, height: ballSize }}
-            className="rounded-full bg-[#0000FF] shrink-0 flex items-center justify-center overflow-hidden"
-            layout
-            transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
+        <div className="flex items-center gap-[0.5em] flex-shrink-0">
+          <button
+            onClick={() => navigate('/')}
+            className="flex items-center gap-[0.5em] group cursor-pointer hover:opacity-80 transition-opacity"
           >
-            <AnimatePresence mode="wait">
-              {location.pathname !== '/' && (
-                <motion.svg
-                  key="arrow"
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 10 }}
-                  transition={{ duration: 0.3, ease: [0.19, 1, 0.22, 1] }}
-                  width="50%"
-                  height="50%"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M19 12H5M12 19l-7-7 7-7" />
-                </motion.svg>
-              )}
-            </AnimatePresence>
-          </motion.div>
+            <div className="relative">
+              <AnimatePresence mode="wait">
+                {location.pathname !== '/' && (
+                  <motion.div
+                    key="back-arrow"
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 10 }}
+                    className="absolute left-[-1.5rem] top-1/2 -translate-y-1/2 pointer-events-none"
+                  >
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-          <div className="relative overflow-hidden">
-            <AnimatePresence mode="wait">
-              <motion.h1
-                key={location.pathname === '/' ? 'home' : 'back'}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4, ease: [0.19, 1, 0.22, 1] }}
-                style={{ fontSize, lineHeight }}
-                className="font-sans font-bold tracking-tighter text-black dark:text-white whitespace-nowrap"
-              >
-                {location.pathname === '/' ? 'Allan Rolim' : content.back}
-              </motion.h1>
-            </AnimatePresence>
-          </div>
-        </button>
+              <BrandLogo
+                fontSize={fontSize}
+                lineHeight={lineHeight}
+                ballSize={ballSize}
+                isHome={location.pathname === '/'}
+                content={content}
+                layoutId="main-logo"
+              />
+            </div>
+          </button>
+        </div>
 
         {/* Controls - suaves e no tema */}
         <div className="flex items-center gap-2 md:gap-3 font-sans flex-shrink-0">
