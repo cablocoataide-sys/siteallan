@@ -296,7 +296,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
                 {/* Conteúdo */}
                 <div className="relative z-10 flex flex-col items-center md:items-start justify-center min-h-[400px] md:min-h-[500px] p-8 md:p-16 text-center md:text-left">
                   <span className="text-sm md:text-base font-sans uppercase tracking-widest text-white/70 group-hover:text-white/90 mb-4 transition-colors duration-700">
-                    Próximo projeto
+                    {content.nextProject}
                   </span>
                   <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.05] tracking-tighter">
                     {nextProject.title}
@@ -319,7 +319,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
 
                   {/* Botão Ver projeto - igual da home */}
                   <div className="px-8 py-4 bg-white border-2 border-white text-black font-sans text-sm font-bold rounded-full flex items-center gap-2 uppercase hover:bg-transparent hover:text-white transition-all duration-300">
-                    VER PROJETO
+                    {content.viewProject}
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M7 17L17 7M17 7H7M17 7v10" />
                     </svg>
