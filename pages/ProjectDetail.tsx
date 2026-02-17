@@ -227,39 +227,28 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
                 const context = canvas.getContext('2d');
                 if (!context) return;
 
-                const { naturalWidth, naturalHeight } = img;
-                if (!naturalWidth || !naturalHeight) return;
+                const targetSize = 50;
+                canvas.width = targetSize;
+                canvas.height = targetSize;
 
-                const targetWidth = 80;
-                const scale = targetWidth / naturalWidth;
-                canvas.width = targetWidth;
-                canvas.height = Math.max(1, Math.floor(naturalHeight * scale));
-
-                context.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                context.drawImage(img, 0, 0, targetSize, targetSize);
+                const imageData = context.getImageData(0, 0, targetSize, targetSize);
                 const data = imageData.data;
 
-                let r = 0;
-                let g = 0;
-                let b = 0;
-                let count = 0;
-
-                const step = 4 * 5;
-                for (let i = 0; i < data.length; i += step) {
+                let r = 0, g = 0, b = 0, count = 0;
+                for (let i = 0; i < data.length; i += 4) {
+                  if (data[i + 3] < 128) continue;
                   r += data[i];
                   g += data[i + 1];
                   b += data[i + 2];
                   count++;
                 }
 
-                if (!count) return;
-                r = Math.round(r / count);
-                g = Math.round(g / count);
-                b = Math.round(b / count);
-
-                setAverageColor(`rgb(${r}, ${g}, ${b})`);
-              } catch {
+                if (count > 0) {
+                  setAverageColor(`rgb(${Math.round(r / count)}, ${Math.round(g / count)}, ${Math.round(b / count)})`);
+                }
+              } catch (err) {
+                console.warn('Canvas color extraction failed (CORS?):', err);
                 setAverageColor(nextProject.color);
               }
             };

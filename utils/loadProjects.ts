@@ -45,11 +45,13 @@ export const loadProjects = async (lang: 'pt' | 'en'): Promise<Project[]> => {
     const data = response.data;
 
     return data.map((project: any, index: number) => {
+      const localizedTags = lang === 'pt' ? (project.tags_pt || project.tags) : (project.tags_en || project.tags);
+
       return {
         id: project.id,
         title: lang === 'pt' ? project.title_pt : project.title_en,
         description: lang === 'pt' ? project.description_pt : project.description_en,
-        tags: project.tags ? project.tags.split(',').map((t: string) => t.trim()) : [],
+        tags: localizedTags ? localizedTags.split(',').map((t: string) => t.trim()) : [],
         image: getUrl(project.thumbnail),
         color: generateColor(index),
         images: {

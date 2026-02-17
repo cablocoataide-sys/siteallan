@@ -34,41 +34,35 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, viewProjectLa
       if (!naturalWidth || !naturalHeight) return;
 
       // Reduz resolução para performance
-      const targetWidth = 80;
-      const scale = targetWidth / naturalWidth;
-      canvas.width = targetWidth;
-      canvas.height = Math.max(1, Math.floor(naturalHeight * scale));
+      const targetSize = 50;
+      canvas.width = targetSize;
+      canvas.height = targetSize;
 
-      context.drawImage(img, 0, 0, canvas.width, canvas.height);
+      // Desenha a imagem no canvas (pode falhar se houver problema de CORS)
+      context.drawImage(img, 0, 0, targetSize, targetSize);
 
-      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+      const imageData = context.getImageData(0, 0, targetSize, targetSize);
       const data = imageData.data;
 
-      let r = 0;
-      let g = 0;
-      let b = 0;
-      let count = 0;
+      let r = 0, g = 0, b = 0, count = 0;
 
-      // Amostras espaçadas para acelerar
-      const step = 4 * 5; // a cada 5 pixels
-      for (let i = 0; i < data.length; i += step) {
+      for (let i = 0; i < data.length; i += 4) {
+        // Ignora pixels muito transparentes se houver
+        if (data[i + 3] < 128) continue;
         r += data[i];
         g += data[i + 1];
         b += data[i + 2];
         count++;
       }
 
-      if (!count) return;
-      r = Math.round(r / count);
-      g = Math.round(g / count);
-      b = Math.round(b / count);
-
-      setAverageColor(`rgb(${r}, ${g}, ${b})`);
-    } catch {
-      // Caso CORS ou outro erro bloqueie o canvas, mantemos a cor fixa do projeto
-      if (!averageColor) {
+      if (count > 0) {
+        setAverageColor(`rgb(${Math.round(r / count)}, ${Math.round(g / count)}, ${Math.round(b / count)})`);
+      } else {
         setAverageColor(project.color);
       }
+    } catch (err) {
+      console.warn('Canvas color extraction failed (CORS?):', err);
+      setAverageColor(project.color);
     }
   };
 
