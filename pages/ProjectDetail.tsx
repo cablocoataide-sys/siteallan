@@ -14,8 +14,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
   const navigate = useNavigate();
   const buttonRef = useRef<HTMLDivElement>(null);
   const angle = useMouseAngle(buttonRef);
-  
-  const project = content.projects.find(p => p.id === Number(id));
+
+  const project = content.projects.find(p => String(p.id) === String(id));
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -55,7 +55,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[1.05] tracking-tighter">
               {project.title}
             </h1>
-            
+
             <p className="text-xl md:text-2xl text-stone-600 dark:text-stone-400 mb-8 max-w-3xl">
               {project.description}
             </p>
@@ -77,11 +77,11 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
       {/* Grid de imagens e textos */}
       <section className="w-full px-4 sm:px-6 md:px-12 pb-24">
         <div className="projects-grid">
-          
+
           {project.images?.gallery.map((imageSrc, index) => {
             const isWide = imageSrc.includes('wide');
             const isEven = index % 2 === 0;
-            
+
             return (
               <motion.div
                 key={index}
@@ -110,7 +110,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
               className="w-full md:col-span-2 py-8 md:py-12"
               style={{ order: 2 }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Sobre o projeto</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">{content.aboutTitle}</h2>
               <p className="text-lg md:text-xl text-stone-600 dark:text-stone-400 leading-relaxed max-w-4xl whitespace-pre-line">
                 {project.about}
               </p>
@@ -127,7 +127,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
               className="w-full md:col-span-2 py-4 md:py-6"
               style={{ order: 999 }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Resultados</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">{content.resultsTitle}</h2>
               <p className="text-lg md:text-xl text-stone-600 dark:text-stone-400 leading-relaxed max-w-4xl whitespace-pre-line">
                 {project.results}
               </p>
@@ -143,11 +143,11 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
           className="group relative w-full rounded-2xl overflow-hidden cursor-pointer"
           onClick={() => window.open('https://wa.me/5543996312386', '_blank')}
           initial={{ backgroundColor: '#0000FF' }}
-          whileHover={{ 
+          whileHover={{
             backgroundColor: '#000000',
             transition: { duration: 0.7, ease: [0.19, 1, 0.22, 1] }
           }}
-          animate={{ 
+          animate={{
             backgroundColor: '#0000FF',
             transition: { duration: 0.7, ease: [0.19, 1, 0.22, 1] }
           }}
@@ -156,20 +156,20 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between min-h-[300px] md:min-h-[400px] p-8 md:p-16 text-center md:text-left">
             <div>
               <span className="text-sm md:text-base font-sans uppercase tracking-widest text-white/70 group-hover:text-white/90 mb-4 block transition-colors duration-700">
-                Vamos trabalhar juntos
+                {content.contactLabel}
               </span>
-              
+
               <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 leading-[1.05] tracking-tighter">
-                Gostou do projeto?
+                {content.contactHeading}
               </h2>
-              
+
               <p className="text-2xl md:text-3xl font-bold text-white/90 leading-[1.1] tracking-tight">
-                Vamos conversar sobre o seu.
+                {content.contactSubheading}
               </p>
             </div>
 
             {/* Botão com setinha que segue o mouse */}
-            <div 
+            <div
               ref={buttonRef}
               className="mt-8 md:mt-0 flex items-center justify-center gap-4 px-8 py-5 bg-white hover:bg-transparent border-2 border-white rounded-full transition-all duration-300 group/button"
             >
@@ -180,18 +180,18 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
                 animate={{ rotate: angle }}
                 transition={{ type: "spring", stiffness: 150, damping: 20 }}
               >
-                <svg 
-                  width="24" 
-                  height="24" 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
                   stroke="currentColor"
-                  strokeWidth="2.5" 
-                  strokeLinecap="round" 
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
                   strokeLinejoin="round"
                   className="text-[#0000FF] group-hover/button:text-white transition-colors duration-300"
                 >
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                  <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </motion.div>
             </div>
@@ -211,7 +211,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
           {(() => {
             const nextId = project.id < content.projects.length ? project.id + 1 : 1;
             const nextProject = content.projects.find(p => p.id === nextId);
-            
+
             if (!nextProject) return null;
 
             const [isHovered, setIsHovered] = React.useState(false);
@@ -304,7 +304,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
                   <p className="text-lg md:text-xl text-white/80 group-hover:text-white mb-6 max-w-2xl transition-colors duration-700">
                     {nextProject.description}
                   </p>
-                  
+
                   {/* Tags */}
                   <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-8">
                     {nextProject.tags.map((tag, i) => (
@@ -321,7 +321,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
                   <div className="px-8 py-4 bg-white border-2 border-white text-black font-sans text-sm font-bold rounded-full flex items-center gap-2 uppercase hover:bg-transparent hover:text-white transition-all duration-300">
                     VER PROJETO
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                      <path d="M7 17L17 7M17 7H7M17 7v10" />
                     </svg>
                   </div>
                 </div>

@@ -7,9 +7,10 @@ import { ArrowUpRight } from 'lucide-react';
 interface ProjectCardProps {
   project: Project;
   index: number;
+  viewProjectLabel: string;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, viewProjectLabel }) => {
   const [averageColor, setAverageColor] = useState<string | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const imgRef = useRef<HTMLImageElement | null>(null);
@@ -119,12 +120,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
       </div>
 
       {/* Camada de cor com fade progressivo */}
-      <motion.div 
+      <motion.div
         className="absolute inset-0 w-full h-full pointer-events-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: isHovered ? 1 : 0 }}
         transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
-        style={{ 
+        style={{
           backgroundColor: averageColor ?? project.color
         }}
       />
@@ -145,10 +146,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
               </span>
             ))}
           </div>
-          
+
           {/* Botão "ver projeto" */}
           <button className="mt-6 px-8 py-4 bg-white border-2 border-white text-black hover:bg-transparent hover:border-white hover:text-white font-sans text-sm font-bold rounded-full flex items-center gap-2 uppercase transform translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 delay-300 ease-out">
-            VER PROJETO
+            {viewProjectLabel}
             <ArrowUpRight size={16} />
           </button>
         </div>

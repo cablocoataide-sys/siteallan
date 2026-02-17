@@ -80,6 +80,7 @@ const App: React.FC = () => {
           toggleTheme={toggleTheme}
           lang={lang}
           setLang={setLang}
+          content={currentContent}
         />
 
         <AnimatePresence mode="wait">

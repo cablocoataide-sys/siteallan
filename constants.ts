@@ -27,7 +27,17 @@ export const CONTENT: Record<'en' | 'pt', Content> = {
     location: "Based in Brazil, working remotely worldwide.",
     marqueeText1: "Based in Brazil",
     marqueeText2: "Available Worldwide",
-    projects: projectsEn
+    projects: projectsEn,
+    viewProject: "View Project",
+    aboutTitle: "About the project",
+    resultsTitle: "Results",
+    nextProject: "Next project",
+    notFoundTitle: "Project not found",
+    backToHome: "Back to home",
+    contactHeading: "Liked the project?",
+    contactSubheading: "Let's talk about yours.",
+    contactLabel: "Let's work together",
+    back: "Back"
   },
   pt: {
     role: "Product & Brand Designer",
@@ -43,6 +53,16 @@ export const CONTENT: Record<'en' | 'pt', Content> = {
     location: "Baseado no Brasil, trabalhando remotamente para o mundo.",
     marqueeText1: "Baseado no Brasil",
     marqueeText2: "Disponível Globalmente",
-    projects: projectsPt
+    projects: projectsPt,
+    viewProject: "Ver Projeto",
+    aboutTitle: "Sobre o projeto",
+    resultsTitle: "Resultados",
+    nextProject: "Próximo projeto",
+    notFoundTitle: "Projeto não encontrado",
+    backToHome: "Voltar para home",
+    contactHeading: "Gostou do projeto?",
+    contactSubheading: "Vamos conversar sobre o seu.",
+    contactLabel: "Vamos trabalhar juntos",
+    back: "Voltar"
   }
 };

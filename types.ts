@@ -34,4 +34,15 @@ export interface Content {
   marqueeText1: string;
   marqueeText2: string;
   projects: Project[];
+  // Labels para tradução
+  viewProject: string;
+  aboutTitle: string;
+  resultsTitle: string;
+  nextProject: string;
+  notFoundTitle: string;
+  backToHome: string;
+  contactHeading: string;
+  contactSubheading: string;
+  contactLabel: string;
+  back: string;
 }
