@@ -40,12 +40,11 @@ const App: React.FC = () => {
     const fetchProjects = async () => {
       setIsLoading(true);
       const projects = await loadProjects(lang);
-      if (projects && projects.length > 0) {
-        setCurrentContent(prev => ({
-          ...prev,
-          projects
-        }));
-      }
+      console.log('Projetos carregados:', projects);
+      setCurrentContent(prev => ({
+        ...prev,
+        projects: projects || []
+      }));
       setIsLoading(false);
     };
 

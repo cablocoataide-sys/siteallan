@@ -41,6 +41,7 @@ export const loadProjects = async (lang: 'pt' | 'en'): Promise<Project[]> => {
 
   try {
     const response = await fetchFromStrapi('/api/projects?populate=*&sort=order:asc');
+    console.log('Resposta bruta Strapi:', response);
     const data = response.data;
 
     return data.map((project: any, index: number) => {
