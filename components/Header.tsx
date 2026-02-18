@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Moon, Sun } from 'lucide-react';
 import { Theme, Language, Content } from '../types';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+// AnimatePresence still used for h1 text transition
 
 interface HeaderProps {
   theme: Theme;
@@ -59,34 +60,14 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
           onClick={() => navigate('/')}
           className="flex items-center gap-[0.5em] group cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0"
         >
-          <motion.div
-            style={{ width: ballSize, height: ballSize }}
-            className="rounded-full bg-[#0000FF] shrink-0 flex items-center justify-center overflow-hidden"
+          <motion.img
+            src={isScrolled ? '/Simbolo-Redux.svg' : '/Simbolo-Full.svg'}
+            alt="Allan Rolim symbol"
+            style={{ height: ballSize, width: 'auto' }}
+            className="shrink-0 object-contain"
             layout
             transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
-          >
-            <AnimatePresence mode="wait">
-              {location.pathname !== '/' && (
-                <motion.svg
-                  key="arrow"
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 10 }}
-                  transition={{ duration: 0.3, ease: [0.19, 1, 0.22, 1] }}
-                  width="50%"
-                  height="50%"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M19 12H5M12 19l-7-7 7-7" />
-                </motion.svg>
-              )}
-            </AnimatePresence>
-          </motion.div>
+          />
 
           <div className="relative overflow-hidden">
             <AnimatePresence mode="wait">
