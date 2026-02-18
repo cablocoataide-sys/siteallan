@@ -43,30 +43,31 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
       animate={{
         opacity: 1,
         y: 0,
-        paddingTop: isScrolled ? "1.2rem" : "3.4rem",
-        paddingBottom: isScrolled ? "1.2rem" : "3.4rem",
+        paddingTop: isScrolled ? "1.2rem" : "3.8rem",
+        paddingBottom: isScrolled ? "1.2rem" : "3.8rem",
         backgroundColor: isScrolled
           ? (theme === 'dark' ? 'rgba(28, 25, 23, 0.85)' : 'rgba(255, 255, 255, 0.85)')
           : 'rgba(255, 255, 255, 0)',
-        backdropFilter: isScrolled ? "blur(12px)" : "blur(0px)",
+        backdropFilter: isScrolled ? "blur(18px) saturate(180%)" : "blur(0px) saturate(100%)",
         borderBottom: isScrolled
-          ? `1px solid ${theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'}`
+          ? `1px solid ${theme === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`
           : '1px solid rgba(0,0,0,0)'
       }}
       transition={premiumTransition}
-      className="fixed top-0 left-0 right-0 z-50"
+      className="fixed top-0 left-0 right-0 z-50 pointer-events-none"
     >
       {/* Container interno com padding fixo */}
-      <div className="w-full px-4 md:px-12 flex justify-between items-center gap-4">
+      <div className="w-full px-4 md:px-12 flex justify-between items-center gap-4 pointer-events-auto">
         {/* Logo: bolinha azul + Allan Rolim / Voltar com transição suave */}
         <button
           onClick={() => navigate('/')}
-          className="flex items-center gap-[0.5em] group cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0"
+          className="flex items-center gap-[0.5em] group cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0 origin-left"
         >
           <motion.div
             animate={{
-              width: isScrolled ? "1.2rem" : "1.8rem",
-              height: isScrolled ? "1.2rem" : "1.8rem"
+              width: isScrolled ? "1.3rem" : "2.1rem",
+              height: isScrolled ? "1.3rem" : "2.1rem",
+              scale: isScrolled ? 1 : 1.15
             }}
             transition={premiumTransition}
             className="rounded-full bg-[#0000FF] shrink-0 flex items-center justify-center overflow-hidden"
@@ -76,16 +77,16 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
               {location.pathname !== '/' && (
                 <motion.svg
                   key="arrow"
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 10 }}
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.5 }}
                   transition={{ duration: 0.3, ease: [0.19, 1, 0.22, 1] }}
                   width="50%"
                   height="50%"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="white"
-                  strokeWidth="2.5"
+                  strokeWidth="3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 >
@@ -99,15 +100,16 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
             <AnimatePresence mode="wait">
               <motion.h1
                 key={location.pathname === '/' ? 'home' : 'back'}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{
                   opacity: 1,
                   y: 0,
-                  fontSize: isScrolled ? "1.35rem" : "2.2rem"
+                  fontSize: isScrolled ? "1.45rem" : "2.4rem",
+                  scale: isScrolled ? 1 : 1.05
                 }}
-                exit={{ opacity: 0, y: -20 }}
+                exit={{ opacity: 0, y: -30 }}
                 transition={premiumTransition}
-                style={{ lineHeight: isScrolled ? "1.5" : "1.1" }}
+                style={{ lineHeight: "1", transformOrigin: "left center" }}
                 className="font-sans font-bold tracking-tighter text-black dark:text-white whitespace-nowrap"
               >
                 {location.pathname === '/' ? 'Allan Rolim' : content.back}
