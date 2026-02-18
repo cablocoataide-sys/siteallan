@@ -20,14 +20,14 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
 
   useEffect(() => {
     return scrollY.onChange((latest) => {
-      setIsScrolled(latest > 50);
+      setIsScrolled(latest > 20); // Faster trigger
     });
   }, [scrollY]);
 
-  // Premium cubic-bezier transition constants
+  // Premium transition constants - Fixed typing by splitting duration and ease
   const premiumTransition = {
-    duration: 0.8,
-    ease: [0.19, 1, 0.22, 1]
+    duration: 0.7,
+    ease: [0.19, 1, 0.22, 1] as const
   };
 
   const segmentStyle = "h-9 rounded-full border border-stone-200/80 dark:border-stone-700/80 bg-stone-50/80 dark:bg-stone-900/80 backdrop-blur-sm flex items-center p-0.5 transition-colors duration-500";
@@ -43,14 +43,17 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
       animate={{
         opacity: 1,
         y: 0,
-        paddingTop: isScrolled ? "1.2rem" : "3.8rem",
-        paddingBottom: isScrolled ? "1.2rem" : "3.8rem",
+        paddingTop: isScrolled ? "0.75rem" : "4.5rem",
+        paddingBottom: isScrolled ? "0.75rem" : "4.5rem",
         backgroundColor: isScrolled
-          ? (theme === 'dark' ? 'rgba(28, 25, 23, 0.85)' : 'rgba(255, 255, 255, 0.85)')
+          ? (theme === 'dark' ? 'rgba(12, 10, 9, 0.95)' : 'rgba(255, 255, 255, 0.95)')
           : 'rgba(255, 255, 255, 0)',
-        backdropFilter: isScrolled ? "blur(18px) saturate(180%)" : "blur(0px) saturate(100%)",
+        backdropFilter: isScrolled ? "blur(20px) saturate(180%)" : "blur(0px) saturate(100%)",
+        boxShadow: isScrolled
+          ? (theme === 'dark' ? '0 10px 30px -10px rgba(0,0,0,0.5)' : '0 10px 30px -10px rgba(0,0,0,0.08)')
+          : '0 0px 0px rgba(0,0,0,0)',
         borderBottom: isScrolled
-          ? `1px solid ${theme === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`
+          ? `1px solid ${theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)'}`
           : '1px solid rgba(0,0,0,0)'
       }}
       transition={premiumTransition}
@@ -61,13 +64,13 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
         {/* Logo: bolinha azul + Allan Rolim / Voltar com transição suave */}
         <button
           onClick={() => navigate('/')}
-          className="flex items-center gap-[0.5em] group cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0 origin-left"
+          className="flex items-center gap-[0.4em] group cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0 origin-left"
         >
           <motion.div
             animate={{
-              width: isScrolled ? "1.3rem" : "2.1rem",
-              height: isScrolled ? "1.3rem" : "2.1rem",
-              scale: isScrolled ? 1 : 1.15
+              width: isScrolled ? "1.1rem" : "2.4rem",
+              height: isScrolled ? "1.1rem" : "2.4rem",
+              scale: isScrolled ? 1 : 1.1
             }}
             transition={premiumTransition}
             className="rounded-full bg-[#0000FF] shrink-0 flex items-center justify-center overflow-hidden"
@@ -86,7 +89,7 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="white"
-                  strokeWidth="3"
+                  strokeWidth="3.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 >
@@ -104,8 +107,7 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
                 animate={{
                   opacity: 1,
                   y: 0,
-                  fontSize: isScrolled ? "1.45rem" : "2.4rem",
-                  scale: isScrolled ? 1 : 1.05
+                  fontSize: isScrolled ? "1.25rem" : "2.8rem",
                 }}
                 exit={{ opacity: 0, y: -30 }}
                 transition={premiumTransition}
@@ -120,48 +122,53 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
 
         {/* Controls - suaves e no tema */}
         <div className="flex items-center gap-2 md:gap-3 font-sans flex-shrink-0">
+          <motion.div
+            animate={{ scale: isScrolled ? 0.9 : 1 }}
+            transition={premiumTransition}
+            className="flex items-center gap-2 md:gap-3"
+          >
+            {/* Language: BR | EN ratio */}
+            <div className={segmentStyle}>
+              <button
+                type="button"
+                onClick={() => setLang('pt')}
+                className={segmentOption(lang === 'pt')}
+                aria-pressed={lang === 'pt'}
+              >
+                BR
+              </button>
+              <button
+                type="button"
+                onClick={() => setLang('en')}
+                className={segmentOption(lang === 'en')}
+                aria-pressed={lang === 'en'}
+              >
+                EN
+              </button>
+            </div>
 
-          {/* Language: BR | EN ratio */}
-          <div className={segmentStyle}>
-            <button
-              type="button"
-              onClick={() => setLang('pt')}
-              className={segmentOption(lang === 'pt')}
-              aria-pressed={lang === 'pt'}
-            >
-              BR
-            </button>
-            <button
-              type="button"
-              onClick={() => setLang('en')}
-              className={segmentOption(lang === 'en')}
-              aria-pressed={lang === 'en'}
-            >
-              EN
-            </button>
-          </div>
-
-          {/* Theme: Light | Dark ratio (both icons always visible) */}
-          <div className={segmentStyle}>
-            <button
-              type="button"
-              onClick={() => theme !== 'light' && toggleTheme()}
-              className={segmentOption(theme === 'light')}
-              aria-pressed={theme === 'light'}
-              aria-label="Modo claro"
-            >
-              <Sun size={16} />
-            </button>
-            <button
-              type="button"
-              onClick={() => theme !== 'dark' && toggleTheme()}
-              className={segmentOption(theme === 'dark')}
-              aria-pressed={theme === 'dark'}
-              aria-label="Modo escuro"
-            >
-              <Moon size={16} />
-            </button>
-          </div>
+            {/* Theme: Light | Dark ratio (both icons always visible) */}
+            <div className={segmentStyle}>
+              <button
+                type="button"
+                onClick={() => theme !== 'light' && toggleTheme()}
+                className={segmentOption(theme === 'light')}
+                aria-pressed={theme === 'light'}
+                aria-label="Modo claro"
+              >
+                <Sun size={16} />
+              </button>
+              <button
+                type="button"
+                onClick={() => theme !== 'dark' && toggleTheme()}
+                className={segmentOption(theme === 'dark')}
+                aria-pressed={theme === 'dark'}
+                aria-label="Modo escuro"
+              >
+                <Moon size={16} />
+              </button>
+            </div>
+          </motion.div>
         </div>
       </div>
     </motion.header>
