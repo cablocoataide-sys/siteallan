@@ -56,9 +56,6 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
               {project.title}
             </h1>
 
-            <p className="text-xl md:text-2xl text-stone-600 dark:text-stone-400 mb-8 max-w-3xl">
-              {project.description}
-            </p>
 
             <div className="flex flex-wrap gap-3">
               {project.tags.map((tag, i) => (
@@ -117,22 +114,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
             </motion.div>
           )}
 
-          {/* Texto "Resultados" - no final */}
-          {project.results && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="w-full md:col-span-2 py-4 md:py-6"
-              style={{ order: 999 }}
-            >
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">{content.resultsTitle}</h2>
-              <p className="text-lg md:text-xl text-stone-600 dark:text-stone-400 leading-relaxed max-w-4xl whitespace-pre-line">
-                {project.results}
-              </p>
-            </motion.div>
-          )}
+
 
         </div>
       </section>
@@ -251,9 +233,6 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
                   <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.05] tracking-tighter">
                     {nextProject.title}
                   </h2>
-                  <p className="text-lg md:text-xl text-white/80 group-hover:text-white mb-6 max-w-2xl transition-colors duration-700">
-                    {nextProject.description}
-                  </p>
 
                   {/* Tags */}
                   <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-8">
