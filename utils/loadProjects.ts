@@ -16,18 +16,8 @@ interface StrapiProject {
 }
 
 // Função para gerar cor baseada no ID do projeto
-const generateColor = (index: number): string => {
-  const colors = [
-    "#4338ca", // Indigo
-    "#0284c7", // Sky
-    "#c2410c", // Orange
-    "#059669", // Emerald
-    "#7c3aed", // Violet
-    "#be185d", // Pink
-    "#0891b2", // Cyan
-    "#dc2626", // Red
-  ];
-  return colors[index % colors.length];
+const generateColor = (_index: number): string => {
+  return "#0000FF"; // Cor padrão azul
 };
 
 export const loadProjects = async (lang: 'pt' | 'en'): Promise<Project[]> => {
