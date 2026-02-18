@@ -67,6 +67,18 @@
         "order": {
             "type": "integer",
             "default": 0
+        },
+        "color": {
+            "type": "string",
+            "required": false
+        },
+        "tags_pt": {
+            "type": "text",
+            "required": false
+        },
+        "tags_en": {
+            "type": "text",
+            "required": false
         }
     }
 }
