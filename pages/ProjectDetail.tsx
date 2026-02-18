@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { Content } from '../types';
 import { useMouseAngle } from '../hooks/useMouseAngle';
+import { getColorFromCache, saveColorToCache } from '../utils/colorCache';
 
 interface ProjectDetailProps {
   content: Content;
@@ -215,12 +216,19 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
             if (!nextProject) return null;
 
             const [isHovered, setIsHovered] = React.useState(false);
-            const [averageColor, setAverageColor] = React.useState<string>(nextProject.color);
+            const [averageColor, setAverageColor] = React.useState<string>(getColorFromCache(nextProject.image) || nextProject.color);
             const imgRef = React.useRef<HTMLImageElement>(null);
 
             const handleImageLoad = () => {
               const img = imgRef.current;
               if (!img) return;
+
+              // Se já temos no cache, não precisamos recalcular
+              const cached = getColorFromCache(nextProject.image);
+              if (cached) {
+                if (averageColor !== cached) setAverageColor(cached);
+                return;
+              }
 
               try {
                 const canvas = document.createElement('canvas');
@@ -245,13 +253,22 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
                 }
 
                 if (count > 0) {
-                  setAverageColor(`rgb(${Math.round(r / count)}, ${Math.round(g / count)}, ${Math.round(b / count)})`);
+                  const finalColor = `rgb(${Math.round(r / count)}, ${Math.round(g / count)}, ${Math.round(b / count)})`;
+                  setAverageColor(finalColor);
+                  saveColorToCache(nextProject.image, finalColor);
                 }
               } catch (err) {
                 console.warn('Canvas color extraction failed (CORS?):', err);
                 setAverageColor(nextProject.color);
               }
             };
+
+            // Se a imagem já estiver no cache do navegador (complete)
+            React.useEffect(() => {
+              if (imgRef.current && imgRef.current.complete) {
+                handleImageLoad();
+              }
+            }, [nextId]);
 
             return (
               <motion.button

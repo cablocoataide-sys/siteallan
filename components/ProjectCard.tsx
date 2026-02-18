@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Project } from '../types';
 import { ArrowUpRight } from 'lucide-react';
+import { getColorFromCache, saveColorToCache } from '../utils/colorCache';
 
 interface ProjectCardProps {
   project: Project;
@@ -11,7 +12,7 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, viewProjectLabel }) => {
-  const [averageColor, setAverageColor] = useState<string | null>(null);
+  const [averageColor, setAverageColor] = useState<string | null>(getColorFromCache(project.image));
   const [isHovered, setIsHovered] = useState(false);
   const imgRef = useRef<HTMLImageElement | null>(null);
   const navigate = useNavigate();
@@ -25,6 +26,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, viewProjectLa
     const img = imgRef.current;
     if (!img) return;
 
+    // Se já temos no cache, não precisamos recalcular
+    const cached = getColorFromCache(project.image);
+    if (cached) {
+      if (averageColor !== cached) setAverageColor(cached);
+      return;
+    }
+
     try {
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
@@ -33,21 +41,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, viewProjectLa
       const { naturalWidth, naturalHeight } = img;
       if (!naturalWidth || !naturalHeight) return;
 
-      // Reduz resolução para performance
       const targetSize = 50;
       canvas.width = targetSize;
       canvas.height = targetSize;
 
-      // Desenha a imagem no canvas (pode falhar se houver problema de CORS)
       context.drawImage(img, 0, 0, targetSize, targetSize);
-
       const imageData = context.getImageData(0, 0, targetSize, targetSize);
       const data = imageData.data;
 
       let r = 0, g = 0, b = 0, count = 0;
-
       for (let i = 0; i < data.length; i += 4) {
-        // Ignora pixels muito transparentes se houver
         if (data[i + 3] < 128) continue;
         r += data[i];
         g += data[i + 1];
@@ -56,7 +59,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, viewProjectLa
       }
 
       if (count > 0) {
-        setAverageColor(`rgb(${Math.round(r / count)}, ${Math.round(g / count)}, ${Math.round(b / count)})`);
+        const finalColor = `rgb(${Math.round(r / count)}, ${Math.round(g / count)}, ${Math.round(b / count)})`;
+        setAverageColor(finalColor);
+        saveColorToCache(project.image, finalColor);
       } else {
         setAverageColor(project.color);
       }
@@ -65,6 +70,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, viewProjectLa
       setAverageColor(project.color);
     }
   };
+
+  // Se a imagem já estiver no cache do navegador (complete), o onLoad pode não disparar
+  // em algumas condições de re-render. Esse efeito garante que tentamos extrair.
+  useEffect(() => {
+    if (imgRef.current && imgRef.current.complete) {
+      handleImageLoad();
+    }
+  }, [project.id]); // Use project.id as trigger to detect project changes if component is reused
 
   // Garante que sempre haja alguma cor mesmo se a imagem não carregar
   useEffect(() => {
