@@ -20,27 +20,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, viewProjectLa
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 32 }}
+      initial={{ opacity: 0, y: 32, borderRadius: "1rem", scale: 1 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '0px 0px -80px 0px', amount: 0.2 }}
+      viewport={{ once: true, margin: '0px 0px -80px 0px', amount: 0.1 }}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: index * 0.08 }}
       whileHover={{
-        borderRadius: "50%",
         scale: 1.02,
         transition: {
           duration: 0.8,
           ease: [0.19, 1, 0.22, 1]
         }
       }}
-      animate={{
-        borderRadius: "1rem",
-        scale: 1,
-        transition: {
-          duration: 0.8,
-          ease: [0.19, 1, 0.22, 1]
-        }
-      }}
-      className="relative aspect-square w-full min-w-0 overflow-hidden cursor-pointer group bg-stone-200 dark:bg-stone-900"
+      className="relative aspect-square w-full min-w-0 overflow-hidden cursor-pointer group bg-stone-200 dark:bg-stone-900 rounded-2xl"
       onClick={handleClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
