@@ -53,7 +53,7 @@ export const loadProjects = async (lang: 'pt' | 'en'): Promise<Project[]> => {
         description: lang === 'pt' ? project.description_pt : project.description_en,
         tags: localizedTags ? localizedTags.split(',').map((t: string) => t.trim()) : [],
         image: getUrl(project.thumbnail),
-        color: generateColor(index),
+        color: project.color || generateColor(index),
         images: {
           thumbnail: getUrl(project.thumbnail),
           gallery: project.gallery ? project.gallery.map((img: any) => getUrl(img)) : [],

@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { Content } from '../types';
 import { useMouseAngle } from '../hooks/useMouseAngle';
-import { getColorFromCache, saveColorToCache } from '../utils/colorCache';
 
 interface ProjectDetailProps {
   content: Content;
@@ -216,59 +215,6 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
             if (!nextProject) return null;
 
             const [isHovered, setIsHovered] = React.useState(false);
-            const [averageColor, setAverageColor] = React.useState<string>(getColorFromCache(nextProject.image) || nextProject.color);
-            const imgRef = React.useRef<HTMLImageElement>(null);
-
-            const handleImageLoad = () => {
-              const img = imgRef.current;
-              if (!img) return;
-
-              // Se já temos no cache, não precisamos recalcular
-              const cached = getColorFromCache(nextProject.image);
-              if (cached) {
-                if (averageColor !== cached) setAverageColor(cached);
-                return;
-              }
-
-              try {
-                const canvas = document.createElement('canvas');
-                const context = canvas.getContext('2d');
-                if (!context) return;
-
-                const targetSize = 50;
-                canvas.width = targetSize;
-                canvas.height = targetSize;
-
-                context.drawImage(img, 0, 0, targetSize, targetSize);
-                const imageData = context.getImageData(0, 0, targetSize, targetSize);
-                const data = imageData.data;
-
-                let r = 0, g = 0, b = 0, count = 0;
-                for (let i = 0; i < data.length; i += 4) {
-                  if (data[i + 3] < 128) continue;
-                  r += data[i];
-                  g += data[i + 1];
-                  b += data[i + 2];
-                  count++;
-                }
-
-                if (count > 0) {
-                  const finalColor = `rgb(${Math.round(r / count)}, ${Math.round(g / count)}, ${Math.round(b / count)})`;
-                  setAverageColor(finalColor);
-                  saveColorToCache(nextProject.image, finalColor);
-                }
-              } catch (err) {
-                console.warn('Canvas color extraction failed (CORS?):', err);
-                setAverageColor(nextProject.color);
-              }
-            };
-
-            // Se a imagem já estiver no cache do navegador (complete)
-            React.useEffect(() => {
-              if (imgRef.current && imgRef.current.complete) {
-                handleImageLoad();
-              }
-            }, [nextId]);
 
             return (
               <motion.button
@@ -280,12 +226,10 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
                 {/* Imagem de preview */}
                 <div className="absolute inset-0">
                   <img
-                    ref={imgRef}
                     src={nextProject.image}
                     alt={nextProject.title}
                     crossOrigin="anonymous"
                     className="w-full h-full object-cover"
-                    onLoad={handleImageLoad}
                   />
                   {/* Overlay escuro sobre a imagem */}
                   <div className="absolute inset-0 bg-black/40" />
@@ -296,7 +240,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
                   className="absolute inset-0 pointer-events-none"
                   animate={{ opacity: isHovered ? 1 : 0 }}
                   transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
-                  style={{ backgroundColor: averageColor }}
+                  style={{ backgroundColor: nextProject.color }}
                 />
 
                 {/* Conteúdo */}
