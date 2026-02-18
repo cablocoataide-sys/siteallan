@@ -45,21 +45,38 @@ export const loadProjects = async (lang: 'pt' | 'en'): Promise<Project[]> => {
     const data = response.data;
 
     return data.map((project: any, index: number) => {
-      const attrs = project.attributes || project; // Handle both flattened and nested
+      // Strapi v5 returns flat objects (no attributes wrapper)
+      // Strapi v4 returns { id, attributes: { ... } }
+      const attrs = project.attributes || project;
       const localizedTags = lang === 'pt' ? (attrs.tags_pt || attrs.tags) : (attrs.tags_en || attrs.tags);
+
+      // Handle both Strapi v4 (thumbnail.data.attributes) and v5 (thumbnail directly)
+      const getThumbnailMedia = (thumbnail: any) => {
+        if (!thumbnail) return null;
+        if (thumbnail.data?.attributes) return thumbnail.data.attributes; // v4
+        if (thumbnail.url) return thumbnail; // v5 flat
+        return null;
+      };
+
+      const thumbnailMedia = getThumbnailMedia(attrs.thumbnail);
+
+      const getGalleryUrls = (gallery: any): string[] => {
+        if (!gallery) return [];
+        if (Array.isArray(gallery.data)) return gallery.data.map((img: any) => getUrl(img.attributes || img)); // v4
+        if (Array.isArray(gallery)) return gallery.map((img: any) => getUrl(img)); // v5 flat
+        return [];
+      };
 
       return {
         id: project.id,
         title: lang === 'pt' ? attrs.title_pt : attrs.title_en,
         description: lang === 'pt' ? attrs.description_pt : attrs.description_en,
         tags: localizedTags ? localizedTags.split(',').map((t: string) => t.trim()) : [],
-        image: getUrl(attrs.thumbnail?.data?.attributes || attrs.thumbnail),
+        image: getUrl(thumbnailMedia),
         color: attrs.color || generateColor(index),
         images: {
-          thumbnail: getUrl(attrs.thumbnail?.data?.attributes || attrs.thumbnail),
-          gallery: attrs.gallery?.data
-            ? attrs.gallery.data.map((img: any) => getUrl(img.attributes || img))
-            : (attrs.gallery ? attrs.gallery.map((img: any) => getUrl(img)) : []),
+          thumbnail: getUrl(thumbnailMedia),
+          gallery: getGalleryUrls(attrs.gallery),
         },
         about: lang === 'pt' ? attrs.about_pt : attrs.about_en,
         results: lang === 'pt' ? attrs.results_pt : attrs.results_en,
