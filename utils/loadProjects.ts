@@ -45,21 +45,24 @@ export const loadProjects = async (lang: 'pt' | 'en'): Promise<Project[]> => {
     const data = response.data;
 
     return data.map((project: any, index: number) => {
-      const localizedTags = lang === 'pt' ? (project.tags_pt || project.tags) : (project.tags_en || project.tags);
+      const attrs = project.attributes || project; // Handle both flattened and nested
+      const localizedTags = lang === 'pt' ? (attrs.tags_pt || attrs.tags) : (attrs.tags_en || attrs.tags);
 
       return {
         id: project.id,
-        title: lang === 'pt' ? project.title_pt : project.title_en,
-        description: lang === 'pt' ? project.description_pt : project.description_en,
+        title: lang === 'pt' ? attrs.title_pt : attrs.title_en,
+        description: lang === 'pt' ? attrs.description_pt : attrs.description_en,
         tags: localizedTags ? localizedTags.split(',').map((t: string) => t.trim()) : [],
-        image: getUrl(project.thumbnail),
-        color: project.color || generateColor(index),
+        image: getUrl(attrs.thumbnail?.data?.attributes || attrs.thumbnail),
+        color: attrs.color || generateColor(index),
         images: {
-          thumbnail: getUrl(project.thumbnail),
-          gallery: project.gallery ? project.gallery.map((img: any) => getUrl(img)) : [],
+          thumbnail: getUrl(attrs.thumbnail?.data?.attributes || attrs.thumbnail),
+          gallery: attrs.gallery?.data
+            ? attrs.gallery.data.map((img: any) => getUrl(img.attributes || img))
+            : (attrs.gallery ? attrs.gallery.map((img: any) => getUrl(img)) : []),
         },
-        about: lang === 'pt' ? project.about_pt : project.about_en,
-        results: lang === 'pt' ? project.results_pt : project.results_en,
+        about: lang === 'pt' ? attrs.about_pt : attrs.about_en,
+        results: lang === 'pt' ? attrs.results_pt : attrs.results_en,
       };
     });
   } catch (error) {
