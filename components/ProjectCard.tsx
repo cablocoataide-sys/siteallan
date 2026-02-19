@@ -36,15 +36,15 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, viewProjectLa
     hover: {
       borderRadius: "999px",
       transition: {
-        duration: 0.6,
-        ease: "easeInOut" as any
+        duration: 0.8,
+        ease: [0.76, 0, 0.24, 1] as any
       }
     },
     rest: {
       borderRadius: "1.5rem",
       transition: {
-        duration: 0.6,
-        ease: "easeInOut" as any
+        duration: 0.8,
+        ease: [0.76, 0, 0.24, 1] as any
       }
     }
   };
@@ -81,8 +81,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, viewProjectLa
           backgroundColor: project.color
         }}
         transition={{
-          duration: 0.6,
-          ease: "easeInOut"
+          duration: 0.8,
+          ease: [0.76, 0, 0.24, 1] as any
         }}
       />
 
@@ -92,8 +92,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, viewProjectLa
         initial={{ opacity: 0 }}
         animate={{ opacity: isHovered ? 1 : 0 }}
         transition={{
-          duration: 0.6,
-          ease: "easeInOut"
+          duration: 0.8,
+          ease: [0.76, 0, 0.24, 1] as any
         }}
       >
         <div className="text-white flex flex-col items-center">
