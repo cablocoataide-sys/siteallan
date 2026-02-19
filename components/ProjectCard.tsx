@@ -18,20 +18,46 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, viewProjectLa
     navigate(`/project/${project.id}`);
   };
 
+  const variants = {
+    initial: {
+      opacity: 0,
+      y: 32,
+      borderRadius: "1.5rem"
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.55,
+        ease: [0.22, 1, 0.36, 1] as any,
+        delay: index * 0.08
+      }
+    },
+    hover: {
+      borderRadius: "999px",
+      transition: {
+        duration: 0.6,
+        ease: "easeInOut" as any
+      }
+    },
+    rest: {
+      borderRadius: "1.5rem",
+      transition: {
+        duration: 0.6,
+        ease: "easeInOut" as any
+      }
+    }
+  };
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 32, borderRadius: "1rem", scale: 1 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      variants={variants}
+      initial="initial"
+      whileInView="visible"
+      animate={isHovered ? "hover" : "rest"}
       viewport={{ once: true, margin: '0px 0px -80px 0px', amount: 0.1 }}
-      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: index * 0.08 }}
-      whileHover={{
-        scale: 1.02,
-        transition: {
-          duration: 0.8,
-          ease: [0.19, 1, 0.22, 1]
-        }
-      }}
-      className="relative aspect-square w-full min-w-0 overflow-hidden cursor-pointer group bg-stone-200 dark:bg-stone-900 rounded-2xl"
+      whileHover={{ scale: 1 }}
+      className="relative aspect-square w-full min-w-0 overflow-hidden cursor-pointer group bg-stone-200 dark:bg-stone-900"
       onClick={handleClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -46,24 +72,35 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, viewProjectLa
         />
       </div>
 
-      {/* Camada de cor com fade progressivo */}
+      {/* Efeito de overlay no hover com transição simétrica */}
       <motion.div
-        className="absolute inset-0 w-full h-full pointer-events-none"
+        className="absolute inset-0 z-10"
         initial={{ opacity: 0 }}
-        animate={{ opacity: isHovered ? 1 : 0 }}
-        transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
-        style={{
+        animate={{
+          opacity: isHovered ? 1 : 0,
           backgroundColor: project.color
+        }}
+        transition={{
+          duration: 0.6,
+          ease: "easeInOut"
         }}
       />
 
       {/* Conteúdo que aparece no hover */}
-      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center p-8 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out">
-        <div className="text-white mix-blend-normal flex flex-col items-center">
-          <h3 className="text-3xl md:text-5xl font-sans font-bold mb-6 leading-[1.05] tracking-tighter transform translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 delay-100 ease-out">
+      <motion.div
+        className="absolute inset-0 z-20 flex flex-col items-center justify-center p-8 text-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isHovered ? 1 : 0 }}
+        transition={{
+          duration: 0.6,
+          ease: "easeInOut"
+        }}
+      >
+        <div className="text-white flex flex-col items-center">
+          <h3 className="text-3xl md:text-5xl font-sans font-bold mb-6 leading-[1.05] tracking-tighter">
             {project.title}
           </h3>
-          <div className="flex flex-wrap justify-center gap-2 max-w-xs transform translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 delay-200 ease-out">
+          <div className="flex flex-wrap justify-center gap-2 max-w-xs">
             {project.tags.map((tag, i) => (
               <span
                 key={i}
@@ -75,12 +112,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, viewProjectLa
           </div>
 
           {/* Botão "ver projeto" */}
-          <button className="mt-6 px-8 py-4 bg-white border-2 border-white text-black hover:bg-transparent hover:border-white hover:text-white font-sans text-sm font-bold rounded-full flex items-center gap-2 uppercase transform translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 delay-300 ease-out">
+          <button className="mt-8 px-8 py-4 bg-white border-2 border-white text-black hover:bg-transparent hover:border-white hover:text-white font-sans text-sm font-bold rounded-full flex items-center gap-2 uppercase transition-all duration-300">
             {viewProjectLabel}
             <ArrowUpRight size={16} />
           </button>
         </div>
-      </div>
+      </motion.div>
     </motion.div>
   );
 };

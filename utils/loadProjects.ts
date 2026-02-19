@@ -29,6 +29,28 @@ export const loadProjects = async (lang: 'pt' | 'en'): Promise<Project[]> => {
     return `${STRAPI_URL}${url}`;
   };
 
+  // 1. Tentar carregar do JSON local primeiro (SSG)
+  // Isso evita o lag do Strapi "acordando" no Render
+  try {
+    const response = await fetch('/projects.json');
+    if (response.ok) {
+      const data = await response.json();
+      if (data.projects && data.projects.length > 0) {
+        console.log('Projetos carregados do cache local (SSG):', data.projects.length);
+        return data.projects.map((project: any, index: number) => ({
+          ...project,
+          title: typeof project.title === 'object' ? project.title[lang] : project.title,
+          description: typeof project.description === 'object' ? project.description[lang] : project.description,
+          about: typeof project.about === 'object' ? project.about[lang] : project.about,
+          results: typeof project.results === 'object' ? project.results[lang] : project.results,
+        }));
+      }
+    }
+  } catch (e) {
+    console.warn('Falha ao carregar projects.json local, tentando Strapi...', e);
+  }
+
+  // 2. Fallback para Strapi (se o JSON local não existir ou estiver vazio)
   try {
     const response = await fetchFromStrapi('/api/projects?populate=*&sort=order:asc');
     console.log('Resposta bruta Strapi:', response);
@@ -36,12 +58,9 @@ export const loadProjects = async (lang: 'pt' | 'en'): Promise<Project[]> => {
 
     const mappedProjects = data.map((project: any, index: number) => {
       try {
-        // Strapi v5 returns flat objects (no attributes wrapper)
-        // Strapi v4 returns { id, attributes: { ... } }
         const attrs = project.attributes || project;
         const localizedTags = lang === 'pt' ? (attrs.tags_pt || attrs.tags) : (attrs.tags_en || attrs.tags);
 
-        // Handle both Strapi v4 (thumbnail.data.attributes) and v5 (thumbnail directly)
         const getThumbnailMedia = (thumbnail: any) => {
           if (!thumbnail) return null;
           if (thumbnail.data?.attributes) return thumbnail.data.attributes; // v4
@@ -79,28 +98,10 @@ export const loadProjects = async (lang: 'pt' | 'en'): Promise<Project[]> => {
       }
     }).filter(Boolean);
 
-    console.log('Mapeamento concluído:', mappedProjects);
+    console.log('Mapeamento concluído (Strapi):', mappedProjects);
     return mappedProjects;
   } catch (error) {
     console.error('Erro ao carregar projetos do Strapi:', error);
-    // Fallback para JSON local se Strapi falhar
-    try {
-      const response = await fetch('/projects.json');
-      const data = await response.json();
-      if (!data.projects) return [];
-      return data.projects.map((project: any, index: number) => ({
-        id: project.id || index + 1,
-        title: project.title[lang],
-        description: project.description[lang],
-        tags: project.tags,
-        image: project.images.thumbnail,
-        color: generateColor(index),
-        images: project.images,
-        about: project.about[lang],
-        results: project.results[lang],
-      }));
-    } catch {
-      return [];
-    }
+    return [];
   }
 };

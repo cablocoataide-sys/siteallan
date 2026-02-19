@@ -56,6 +56,11 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
               {project.title}
             </h1>
 
+            {project.description && (
+              <p className="text-xl md:text-2xl text-stone-600 dark:text-stone-400 mb-8 max-w-3xl leading-relaxed">
+                {project.description}
+              </p>
+            )}
 
             <div className="flex flex-wrap gap-3">
               {project.tags.map((tag, i) => (
@@ -105,11 +110,26 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
               className="w-full md:col-span-2 py-8 md:py-12"
-              style={{ order: 2 }}
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-6">{content.aboutTitle}</h2>
               <p className="text-lg md:text-xl text-stone-600 dark:text-stone-400 leading-relaxed max-w-4xl whitespace-pre-line">
                 {project.about}
+              </p>
+            </motion.div>
+          )}
+
+          {/* Texto "Resultados" */}
+          {project.results && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="w-full md:col-span-2 py-8 md:py-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">{content.resultsTitle}</h2>
+              <p className="text-lg md:text-xl text-stone-600 dark:text-stone-400 leading-relaxed max-w-4xl whitespace-pre-line">
+                {project.results}
               </p>
             </motion.div>
           )}

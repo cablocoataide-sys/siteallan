@@ -1,3 +1,37 @@
 {
-  "projects": []
+  "projects": [
+    {
+      "id": 1,
+      "title": {
+        "pt": "Projeto Teste",
+        "en": "Test Project"
+      },
+      "description": {
+        "pt": "Esta é uma descrição de teste para o projeto.",
+        "en": "This is a test description for the project."
+      },
+      "tags": [
+        "Branding",
+        "UI/UX",
+        "Web"
+      ],
+      "image": "https://res.cloudinary.com/dbavi5eby/image/upload/v1771121171/Snap_Insta_to_468002073_18481221049028995_4181950221484231723_n_32c8fbcc81.jpg",
+      "color": "#0000FF",
+      "images": {
+        "thumbnail": "https://res.cloudinary.com/dbavi5eby/image/upload/v1771121171/Snap_Insta_to_468002073_18481221049028995_4181950221484231723_n_32c8fbcc81.jpg",
+        "gallery": [
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771121171/Snap_Insta_to_468002073_18481221049028995_4181950221484231723_n_32c8fbcc81.jpg",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771121201/Snap_Insta_to_468287603_18481221418028995_901789783581023166_n_2e18bea887.jpg"
+        ]
+      },
+      "about": {
+        "pt": "Sobre o projeto: texto detalhado em português.",
+        "en": "About the project: detailed text in English."
+      },
+      "results": {
+        "pt": "Resultados do projeto: texto de resultados em português.",
+        "en": "Project results: results text in English."
+      }
+    }
+  ]
 }
