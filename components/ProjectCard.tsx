@@ -37,14 +37,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, viewProjectLa
       borderRadius: "999px",
       transition: {
         duration: 0.8,
-        ease: [0.76, 0, 0.24, 1] as any
+        ease: "easeInOut" as any
       }
     },
     rest: {
       borderRadius: "1.5rem",
       transition: {
         duration: 0.8,
-        ease: [0.76, 0, 0.24, 1] as any
+        ease: "easeInOut" as any
       }
     }
   };
