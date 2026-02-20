@@ -41,22 +41,22 @@
       }
     },
     {
-      "id": 6,
+      "id": 8,
       "title": {
         "pt": "Gautier & Munhoz",
         "en": "Gautier & Munhoz"
       },
       "description": {
-        "pt": "Teste",
+        "pt": "Testelsidjh",
         "en": "Test"
       },
       "tags": [],
       "image": "https://res.cloudinary.com/dbavi5eby/image/upload/v1771443473/Captura_de_Tela_2026_02_18_as_11_29_56_bd993d58ad.png",
-      "color": "#0000FF",
+      "color": "#4c674a",
       "images": {
         "thumbnail": "https://res.cloudinary.com/dbavi5eby/image/upload/v1771443473/Captura_de_Tela_2026_02_18_as_11_29_56_bd993d58ad.png",
         "gallery": [
-          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771443624/Captura_de_Tela_2026_02_18_as_11_30_21_afaa79912d.png"
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771555555/Captura_de_Tela_2026_02_18_as_11_30_21_afaa79912d.png"
         ]
       },
       "about": {
