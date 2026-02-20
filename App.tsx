@@ -7,8 +7,9 @@ import ProjectDetail from './pages/ProjectDetail';
 import { CONTENT } from './constants';
 import { loadProjects } from './utils/loadProjects';
 import { Theme, Language, Content } from './types';
+import { ProjectProvider, useProjectContext } from './contexts/ProjectContext';
 
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
   // Inicializa tema considerando:
   // 1) preferência salva
   // 2) tema do sistema
@@ -71,16 +72,19 @@ const App: React.FC = () => {
     setTheme(prev => prev === 'light' ? 'dark' : 'light');
   };
 
+  const { projectColor, projectTextColor } = useProjectContext();
+
   return (
-    <Router>
-      <div className="min-h-screen w-full bg-stone-50 dark:bg-stone-950 selection:bg-[#0000FF] selection:text-white transition-all duration-300">
-        <Header
-          theme={theme}
-          toggleTheme={toggleTheme}
-          lang={lang}
-          setLang={setLang}
-          content={currentContent}
-        />
+    <div className="min-h-screen w-full bg-stone-50 dark:bg-stone-950 selection:bg-[#0000FF] selection:text-white transition-all duration-300">
+      <Header
+        theme={theme}
+        toggleTheme={toggleTheme}
+        lang={lang}
+        setLang={setLang}
+        content={currentContent}
+        projectColor={projectColor}
+        projectTextColor={projectTextColor}
+      />
 
         <AnimatePresence mode="wait">
           <motion.main
@@ -93,11 +97,20 @@ const App: React.FC = () => {
           >
             <Routes>
               <Route path="/" element={<Home content={currentContent} />} />
-              <Route path="/:slug" element={<ProjectDetail content={currentContent} />} />
+              <Route path="/:slug" element={<ProjectDetail content={currentContent} theme={theme} />} />
             </Routes>
           </motion.main>
         </AnimatePresence>
       </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <Router>
+      <ProjectProvider>
+        <AppContent />
+      </ProjectProvider>
     </Router>
   );
 };

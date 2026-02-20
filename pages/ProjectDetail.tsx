@@ -4,12 +4,15 @@ import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { Content } from '../types';
 import { useMouseAngle } from '../hooks/useMouseAngle';
+import { useProjectContext } from '../contexts/ProjectContext';
+import { generateDarkColor, getTextColor } from '../utils/colorTheme';
 
 interface ProjectDetailProps {
   content: Content;
+  theme: 'light' | 'dark';
 }
 
-const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
+const ProjectDetail: React.FC<ProjectDetailProps> = ({ content, theme }) => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const buttonRef = useRef<HTMLDivElement>(null);
@@ -26,31 +29,28 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
     return projectSlug === slug;
   });
 
-  // Função para calcular luminância e determinar cor do texto
-  const getTextColor = (hexColor: string): string => {
-    // Remove # se existir
-    const hex = hexColor.replace('#', '');
-    
-    // Converte para RGB
-    const r = parseInt(hex.substring(0, 2), 16) / 255;
-    const g = parseInt(hex.substring(2, 4), 16) / 255;
-    const b = parseInt(hex.substring(4, 6), 16) / 255;
-    
-    // Calcula luminância relativa (WCAG)
-    const luminance = 0.2126 * (r <= 0.03928 ? r / 12.92 : Math.pow((r + 0.055) / 1.055, 2.4)) +
-                     0.7152 * (g <= 0.03928 ? g / 12.92 : Math.pow((g + 0.055) / 1.055, 2.4)) +
-                     0.0722 * (b <= 0.03928 ? b / 12.92 : Math.pow((b + 0.055) / 1.055, 2.4));
-    
-    // Retorna branco para cores escuras, preto para cores claras
-    return luminance > 0.5 ? '#000000' : '#FFFFFF';
-  };
-
-  const textColor = project ? getTextColor(project.color) : '#000000';
+  // Gera cores baseadas no tema
+  const projectColor = project 
+    ? (theme === 'dark' ? generateDarkColor(project.color) : project.color)
+    : '#FFFFFF';
+  
+  const textColor = getTextColor(projectColor);
   const isDarkText = textColor === '#000000';
+  const { setProjectColors } = useProjectContext();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [slug]);
+    
+    // Define as cores do projeto no contexto
+    if (project) {
+      setProjectColors(projectColor, textColor);
+    }
+    
+    // Limpa as cores quando sair da página
+    return () => {
+      setProjectColors(null, null);
+    };
+  }, [slug, project, projectColor, textColor, setProjectColors, theme]);
 
   if (!project) {
     return (
@@ -75,7 +75,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
       exit={{ opacity: 0 }}
       className="w-full"
       style={{ 
-        backgroundColor: project.color,
+        backgroundColor: projectColor,
         color: textColor
       }}
     >
@@ -153,7 +153,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
               <div
                 id="video-overlay"
                 className="absolute inset-0 flex flex-col items-start justify-start p-8 md:p-12 cursor-pointer transition-opacity duration-300"
-                style={{ backgroundColor: `${project.color}80` }}
+                style={{ backgroundColor: `${projectColor}80` }}
                 onClick={() => {
                   const video = document.getElementById('palae-video') as HTMLVideoElement;
                   if (video) {
@@ -179,7 +179,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
                     style={{
                       backgroundColor: textColor,
                       borderColor: textColor,
-                      color: project.color
+                      color: projectColor
                     }}
                   >
                     Ver o vídeo

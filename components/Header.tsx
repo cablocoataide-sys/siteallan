@@ -11,9 +11,11 @@ interface HeaderProps {
   lang: Language;
   setLang: (lang: Language) => void;
   content: Content;
+  projectColor: string | null;
+  projectTextColor: string | null;
 }
 
-const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, content }) => {
+const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, content, projectColor, projectTextColor }) => {
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
@@ -32,12 +34,27 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
     });
   }, [scrollY]);
 
-  const segmentStyle = "h-9 rounded-full border border-stone-200/80 dark:border-stone-700/80 bg-stone-50/80 dark:bg-stone-900/80 backdrop-blur-sm flex items-center p-0.5";
+  const segmentStyle = `h-9 rounded-full border flex items-center p-0.5 backdrop-blur-sm`;
   const segmentOption = (active: boolean) =>
-    `flex-1 min-w-[2.5rem] h-full rounded-full flex items-center justify-center text-xs md:text-sm font-medium transition-all cursor-pointer ${active
-      ? "bg-stone-200/90 dark:bg-stone-700/90 text-stone-900 dark:text-stone-50"
-      : "text-stone-500 dark:text-stone-500 hover:text-stone-800 dark:hover:text-stone-300"
+    `flex-1 min-w-[2.5rem] h-full rounded-full flex items-center justify-center text-xs md:text-sm font-medium transition-all cursor-pointer ${
+      active ? "" : "hover:opacity-70"
     }`;
+
+  // Cores dinâmicas baseadas no projeto ou tema padrão
+  const bgColor = projectColor 
+    ? `${projectColor}B3` // 70% opacidade
+    : isScrolled 
+      ? (theme === 'dark' ? 'rgba(28, 25, 23, 0.7)' : 'rgba(255, 255, 255, 0.7)')
+      : 'transparent';
+  
+  const textColorValue = projectTextColor || (theme === 'dark' ? '#ffffff' : '#000000');
+  const borderColor = projectTextColor 
+    ? `${projectTextColor}33` // 20% opacidade
+    : theme === 'dark' ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
+  
+  const activeBg = projectTextColor 
+    ? `${projectTextColor}26` // 15% opacidade
+    : theme === 'dark' ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.15)';
 
   return (
     <motion.header
@@ -47,23 +64,25 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
       style={{
         paddingTop: containerPadding,
         paddingBottom: containerPadding,
-        borderBottomColor: 'transparent',
-        borderBottomWidth: 0
+        backgroundColor: bgColor,
+        color: textColorValue
       }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled ? 'bg-white/70 dark:bg-stone-900/70 backdrop-blur-xl' : 'bg-transparent'
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 backdrop-blur-xl"
     >
       {/* Container interno com padding fixo */}
       <div className="w-full px-4 md:px-12 flex justify-between items-center gap-4">
-        {/* Logo: bolinha azul + Allan Rolim / Voltar com transição suave */}
+        {/* Logo: bolinha + Allan Rolim / Voltar com transição suave */}
         <button
           onClick={() => navigate('/')}
           className="flex items-center gap-[0.5em] group cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0"
         >
           <motion.div
-            style={{ width: ballSize, height: ballSize }}
-            className="rounded-full bg-[#0000FF] shrink-0 flex items-center justify-center overflow-hidden"
+            style={{ 
+              width: ballSize, 
+              height: ballSize,
+              backgroundColor: projectColor ? textColorValue : '#0000FF'
+            }}
+            className="rounded-full shrink-0 flex items-center justify-center overflow-hidden"
             layout
             transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
           >
@@ -79,7 +98,7 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
                   height="50%"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="white"
+                  stroke={projectColor || "white"}
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -98,8 +117,12 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.4, ease: [0.19, 1, 0.22, 1] }}
-                style={{ fontSize, lineHeight }}
-                className="font-sans font-bold tracking-tighter text-black dark:text-white whitespace-nowrap"
+                className="font-sans font-bold tracking-tighter whitespace-nowrap"
+                style={{ 
+                  fontSize, 
+                  lineHeight,
+                  color: textColorValue
+                }}
               >
                 {location.pathname === '/' ? 'Allan Rolim' : content.back}
               </motion.h1>
@@ -111,11 +134,12 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
         <div className="flex items-center gap-2 md:gap-3 font-sans flex-shrink-0">
 
           {/* Language: BR | EN ratio */}
-          <div className={segmentStyle}>
+          <div className={segmentStyle} style={{ borderColor, backgroundColor: `${textColorValue}0D` }}>
             <button
               type="button"
               onClick={() => setLang('pt')}
               className={segmentOption(lang === 'pt')}
+              style={lang === 'pt' ? { backgroundColor: activeBg, color: textColorValue } : { color: `${textColorValue}99` }}
               aria-pressed={lang === 'pt'}
             >
               BR
@@ -124,18 +148,20 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
               type="button"
               onClick={() => setLang('en')}
               className={segmentOption(lang === 'en')}
+              style={lang === 'en' ? { backgroundColor: activeBg, color: textColorValue } : { color: `${textColorValue}99` }}
               aria-pressed={lang === 'en'}
             >
               EN
             </button>
           </div>
 
-          {/* Theme: Light | Dark ratio (both icons always visible) */}
-          <div className={segmentStyle}>
+          {/* Theme: Light | Dark ratio */}
+          <div className={segmentStyle} style={{ borderColor, backgroundColor: `${textColorValue}0D` }}>
             <button
               type="button"
               onClick={() => theme !== 'light' && toggleTheme()}
               className={segmentOption(theme === 'light')}
+              style={theme === 'light' ? { backgroundColor: activeBg, color: textColorValue } : { color: `${textColorValue}99` }}
               aria-pressed={theme === 'light'}
               aria-label="Modo claro"
             >
@@ -145,6 +171,7 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
               type="button"
               onClick={() => theme !== 'dark' && toggleTheme()}
               className={segmentOption(theme === 'dark')}
+              style={theme === 'dark' ? { backgroundColor: activeBg, color: textColorValue } : { color: `${textColorValue}99` }}
               aria-pressed={theme === 'dark'}
               aria-label="Modo escuro"
             >
