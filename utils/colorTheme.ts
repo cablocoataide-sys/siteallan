@@ -28,6 +28,31 @@ export const generateDarkColor = (hexColor: string): string => {
 };
 
 /**
+ * Inverte a cor (versão negativa) usando OKLCH
+ * Se a cor é clara, retorna escura. Se é escura, retorna clara.
+ */
+export const invertColor = (hexColor: string): string => {
+  try {
+    const color = parse(hexColor);
+    if (!color) return '#000000';
+    
+    const oklchColor = oklch(color);
+    if (!oklchColor) return '#000000';
+    
+    // Inverte a luminosidade
+    const invertedColor = {
+      ...oklchColor,
+      l: 1 - oklchColor.l // Inverte: claro vira escuro, escuro vira claro
+    };
+    
+    return formatHex(invertedColor);
+  } catch (error) {
+    console.error('Erro ao inverter cor:', error);
+    return '#000000';
+  }
+};
+
+/**
  * Calcula luminância e determina cor do texto (preto ou branco)
  */
 export const getTextColor = (hexColor: string): string => {

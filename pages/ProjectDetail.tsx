@@ -5,7 +5,7 @@ import { ArrowLeft } from 'lucide-react';
 import { Content } from '../types';
 import { useMouseAngle } from '../hooks/useMouseAngle';
 import { useProjectContext } from '../contexts/ProjectContext';
-import { generateDarkColor, getTextColor } from '../utils/colorTheme';
+import { generateDarkColor, getTextColor, invertColor } from '../utils/colorTheme';
 
 interface ProjectDetailProps {
   content: Content;
@@ -36,6 +36,11 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content, theme }) => {
   
   const textColor = getTextColor(projectColor);
   const isDarkText = textColor === '#000000';
+  
+  // Cor invertida para a seção CTA (contraste com o tema da página)
+  const ctaColor = invertColor(projectColor);
+  const ctaTextColor = getTextColor(ctaColor);
+  
   const { setProjectColors } = useProjectContext();
 
   useEffect(() => {
@@ -267,28 +272,37 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content, theme }) => {
         <motion.div
           className="group relative w-full rounded-2xl overflow-hidden cursor-pointer"
           onClick={() => window.open('https://wa.me/5543996312386', '_blank')}
-          initial={{ backgroundColor: '#0000FF' }}
+          initial={{ backgroundColor: ctaColor }}
           whileHover={{
-            backgroundColor: '#000000',
+            backgroundColor: textColor === '#FFFFFF' ? '#FFFFFF' : '#000000',
             transition: { duration: 0.7, ease: [0.19, 1, 0.22, 1] }
           }}
           animate={{
-            backgroundColor: '#0000FF',
+            backgroundColor: ctaColor,
             transition: { duration: 0.7, ease: [0.19, 1, 0.22, 1] }
           }}
         >
           {/* Conteúdo */}
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between min-h-[300px] md:min-h-[400px] p-8 md:p-16 text-center md:text-left">
             <div>
-              <span className="text-sm md:text-base font-sans uppercase tracking-widest text-white/70 group-hover:text-white/90 mb-4 block transition-colors duration-700">
+              <span 
+                className="text-sm md:text-base font-sans uppercase tracking-widest mb-4 block transition-colors duration-700"
+                style={{ color: `${ctaTextColor}B3` }}
+              >
                 {content.contactLabel}
               </span>
 
-              <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 leading-[1.05] tracking-tighter">
+              <h2 
+                className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-[1.05] tracking-tighter"
+                style={{ color: ctaTextColor }}
+              >
                 {content.contactHeading}
               </h2>
 
-              <p className="text-2xl md:text-3xl font-bold text-white/90 leading-[1.1] tracking-tight">
+              <p 
+                className="text-2xl md:text-3xl font-bold leading-[1.1] tracking-tight"
+                style={{ color: `${ctaTextColor}E6` }}
+              >
                 {content.contactSubheading}
               </p>
             </div>
@@ -296,9 +310,16 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content, theme }) => {
             {/* Botão com setinha que segue o mouse */}
             <div
               ref={buttonRef}
-              className="mt-8 md:mt-0 flex items-center justify-center gap-4 px-8 py-5 bg-white hover:bg-transparent border-2 border-white rounded-full transition-all duration-300 group/button"
+              className="mt-8 md:mt-0 flex items-center justify-center gap-4 px-8 py-5 border-2 rounded-full transition-all duration-300 group/button"
+              style={{
+                backgroundColor: ctaTextColor,
+                borderColor: ctaTextColor
+              }}
             >
-              <span className="text-lg md:text-xl font-bold text-[#0000FF] group-hover/button:text-white font-sans transition-colors duration-300">
+              <span 
+                className="text-lg md:text-xl font-bold font-sans transition-colors duration-300"
+                style={{ color: ctaColor }}
+              >
                 {content.ctaButton}
               </span>
               <motion.div
@@ -314,7 +335,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content, theme }) => {
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="text-[#0000FF] group-hover/button:text-white transition-colors duration-300"
+                  style={{ color: ctaColor }}
+                  className="transition-colors duration-300"
                 >
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
