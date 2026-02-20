@@ -41,6 +41,7 @@ export const loadProjects = async (lang: 'pt' | 'en'): Promise<Project[]> => {
           ...project,
           title: typeof project.title === 'object' ? project.title[lang] : project.title,
           description: typeof project.description === 'object' ? project.description[lang] : project.description,
+          tags: typeof project.tags === 'object' ? project.tags[lang] : project.tags,
           about: typeof project.about === 'object' ? project.about[lang] : project.about,
           results: typeof project.results === 'object' ? project.results[lang] : project.results,
         }));

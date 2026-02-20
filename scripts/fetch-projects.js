@@ -74,7 +74,10 @@ async function bakeData() {
                 pt: attrs.description_pt || attrs.description || '',
                 en: attrs.description_en || attrs.description || ''
             },
-            tags: typeof (attrs.tags_pt || attrs.tags) === 'string' ? (attrs.tags_pt || attrs.tags).split(',').map(t => t.trim()) : [],
+            tags: {
+                pt: typeof (attrs.tags_pt || attrs.tags) === 'string' ? (attrs.tags_pt || attrs.tags).split(',').map(t => t.trim()) : [],
+                en: typeof (attrs.tags_en || attrs.tags) === 'string' ? (attrs.tags_en || attrs.tags).split(',').map(t => t.trim()) : []
+            },
             image: getUrl(thumbnailMedia),
             color: attrs.color || "#0000FF",
             images: {

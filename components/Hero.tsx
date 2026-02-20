@@ -35,7 +35,7 @@ const Hero: React.FC<HeroProps> = ({ content }) => {
   };
 
   return (
-    <section className="w-full min-h-[70vh] flex flex-col justify-end pb-4 md:pb-20 px-4 md:px-12 pt-32 md:pt-12 overflow-hidden">
+    <section className="w-full min-h-[70vh] flex flex-col justify-end pb-4 md:pb-20 px-4 md:px-12 pt-44 md:pt-12 overflow-hidden">
       <motion.div 
         initial="hidden"
         animate="visible"
