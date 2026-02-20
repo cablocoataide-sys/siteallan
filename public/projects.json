@@ -1,36 +1,71 @@
 {
   "projects": [
     {
-      "id": 1,
+      "id": 4,
       "title": {
-        "pt": "Projeto Teste",
-        "en": "Test Project"
+        "pt": "Palae",
+        "en": "Palae"
       },
       "description": {
-        "pt": "Esta é uma descrição de teste para o projeto.",
-        "en": "This is a test description for the project."
+        "pt": "Desenvolvimento de naming e identidade visual para Palae, marca de queijo vegetal. O projeto partiu do reposicionamento da marca e da necessidade de um nome que contemplasse sua nova essência, resultando em um sistema visual completo, do nome à aplicação.",
+        "en": "Naming and visual identity development for Palae, a plant-based cheese brand. The project started from a brand repositioning and the need for a name that could carry its new essence, resulting in a complete visual system, from naming to application."
       },
       "tags": [
-        "Branding",
-        "UI/UX",
-        "Web"
+        "Identidade Visual",
+        "Naming",
+        "Direção de Arte",
+        "Fotografia"
       ],
       "image": "https://res.cloudinary.com/dbavi5eby/image/upload/v1771121171/Snap_Insta_to_468002073_18481221049028995_4181950221484231723_n_32c8fbcc81.jpg",
-      "color": "#0000FF",
+      "color": "#7a684d",
       "images": {
         "thumbnail": "https://res.cloudinary.com/dbavi5eby/image/upload/v1771121171/Snap_Insta_to_468002073_18481221049028995_4181950221484231723_n_32c8fbcc81.jpg",
         "gallery": [
-          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771121171/Snap_Insta_to_468002073_18481221049028995_4181950221484231723_n_32c8fbcc81.jpg",
-          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771121201/Snap_Insta_to_468287603_18481221418028995_901789783581023166_n_2e18bea887.jpg"
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771121201/Snap_Insta_to_468287603_18481221418028995_901789783581023166_n_2e18bea887.jpg",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771121201/Snap_Insta_to_468094081_18481221151028995_6566193296392510420_n_c477f6ea9e.jpg",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771121205/Snap_Insta_to_468011970_18481221316028995_754923863862983745_n_4a7b048115.jpg",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771121204/Snap_Insta_to_468061154_18481221319028995_6481278197824951260_n_6548691791.jpg",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771121204/Snap_Insta_to_468010391_18481221280028995_2645669555477812910_n_20e14f709d.jpg",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771121206/Snap_Insta_to_468260555_18481221163028995_4799201878901499334_n_ccb6a24c5d.jpg",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771121202/Snap_Insta_to_468057123_18481221331028995_8996198001812828415_n_4a6bc143ef.jpg",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771121207/Snap_Insta_to_468056643_18481220983028995_7945378510173070154_n_4492601e5c.jpg"
         ]
       },
       "about": {
-        "pt": "Sobre o projeto: texto detalhado em português.",
-        "en": "About the project: detailed text in English."
+        "pt": "\"Palae\" é um falso latim construído para remeter a palácio. Os atributos guiaram cada decisão: tipografia com serifa afiada, alto contraste e grande altura de X. O símbolo nasce do próprio P, onde a barra vertical funciona como coluna e o bojo como volume, traduzindo a dualidade entre o arquétipo do cara comum e do amante.",
+        "en": "\"Palae\" is a constructed false Latin evoking the word palace. Every decision was guided by brand attributes: sharp-serif typography, high contrast, and a tall x-height. The symbol emerges from the letter P itself, where the vertical stroke works as a column and the bowl as volume, expressing the duality between the everyman and the lover archetypes."
       },
       "results": {
-        "pt": "Resultados do projeto: texto de resultados em português.",
-        "en": "Project results: results text in English."
+        "pt": "Um nome forte, memorável e com camadas de significado. Uma identidade que equilibra o refinado e o acessível, o inusitado e o leve, posicionando Palae como uma marca que vai além do produto e cria contexto cultural ao redor do queijo vegetal.",
+        "en": "A strong, memorable name with layers of meaning. An identity that balances refinement and accessibility, the unusual and the light, positioning Palae as a brand that goes beyond the product and builds cultural context around plant-based cheese."
+      }
+    },
+    {
+      "id": 6,
+      "title": {
+        "pt": "Gautier & Munhoz",
+        "en": "Gautier & Munhoz"
+      },
+      "description": {
+        "pt": "Teste",
+        "en": "Test"
+      },
+      "tags": [],
+      "image": "https://res.cloudinary.com/dbavi5eby/image/upload/v1771443473/Captura_de_Tela_2026_02_18_as_11_29_56_bd993d58ad.png",
+      "color": "#0000FF",
+      "images": {
+        "thumbnail": "https://res.cloudinary.com/dbavi5eby/image/upload/v1771443473/Captura_de_Tela_2026_02_18_as_11_29_56_bd993d58ad.png",
+        "gallery": [
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771443624/Captura_de_Tela_2026_02_18_as_11_30_21_afaa79912d.png"
+        ]
+      },
+      "about": {
+        "pt": "",
+        "en": ""
+      },
+      "results": {
+        "pt": "",
+        "en": ""
       }
     }
   ]

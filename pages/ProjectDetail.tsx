@@ -17,6 +17,28 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
 
   const project = content.projects.find(p => String(p.id) === String(id));
 
+  // Função para calcular luminância e determinar cor do texto
+  const getTextColor = (hexColor: string): string => {
+    // Remove # se existir
+    const hex = hexColor.replace('#', '');
+    
+    // Converte para RGB
+    const r = parseInt(hex.substring(0, 2), 16) / 255;
+    const g = parseInt(hex.substring(2, 4), 16) / 255;
+    const b = parseInt(hex.substring(4, 6), 16) / 255;
+    
+    // Calcula luminância relativa (WCAG)
+    const luminance = 0.2126 * (r <= 0.03928 ? r / 12.92 : Math.pow((r + 0.055) / 1.055, 2.4)) +
+                     0.7152 * (g <= 0.03928 ? g / 12.92 : Math.pow((g + 0.055) / 1.055, 2.4)) +
+                     0.0722 * (b <= 0.03928 ? b / 12.92 : Math.pow((b + 0.055) / 1.055, 2.4));
+    
+    // Retorna branco para cores escuras, preto para cores claras
+    return luminance > 0.5 ? '#000000' : '#FFFFFF';
+  };
+
+  const textColor = project ? getTextColor(project.color) : '#000000';
+  const isDarkText = textColor === '#000000';
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [id]);
@@ -43,6 +65,10 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className="w-full"
+      style={{ 
+        backgroundColor: project.color,
+        color: textColor
+      }}
     >
       {/* Hero do projeto - Título e descrição */}
       <section className="w-full px-4 sm:px-6 md:px-12 pt-44 md:pt-44 pb-12 md:pb-16">
@@ -57,7 +83,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
             </h1>
 
             {project.description && (
-              <p className="text-xl md:text-2xl text-stone-600 dark:text-stone-400 mb-8 max-w-3xl leading-relaxed">
+              <p className="text-xl md:text-2xl mb-8 max-w-3xl leading-relaxed" style={{ opacity: 0.7 }}>
                 {project.description}
               </p>
             )}
@@ -66,7 +92,11 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
               {project.tags.map((tag, i) => (
                 <span
                   key={i}
-                  className="text-sm font-sans uppercase tracking-widest border border-stone-300 dark:border-stone-700 px-4 py-2 rounded-full"
+                  className="text-sm font-sans uppercase tracking-widest px-4 py-2 rounded-full"
+                  style={{ 
+                    border: `1px solid ${textColor}`,
+                    opacity: 0.8
+                  }}
                 >
                   {tag}
                 </span>
@@ -112,7 +142,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
               className="w-full md:col-span-2 py-8 md:py-12"
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-6">{content.aboutTitle}</h2>
-              <p className="text-lg md:text-xl text-stone-600 dark:text-stone-400 leading-relaxed max-w-4xl whitespace-pre-line">
+              <p className="text-lg md:text-xl leading-relaxed max-w-4xl whitespace-pre-line" style={{ opacity: 0.7 }}>
                 {project.about}
               </p>
             </motion.div>
@@ -128,7 +158,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
               className="w-full md:col-span-2 py-8 md:py-12"
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-6">{content.resultsTitle}</h2>
-              <p className="text-lg md:text-xl text-stone-600 dark:text-stone-400 leading-relaxed max-w-4xl whitespace-pre-line">
+              <p className="text-lg md:text-xl leading-relaxed max-w-4xl whitespace-pre-line" style={{ opacity: 0.7 }}>
                 {project.results}
               </p>
             </motion.div>
