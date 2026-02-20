@@ -10,12 +10,21 @@ interface ProjectDetailProps {
 }
 
 const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
-  const { id } = useParams<{ id: string }>();
+  const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const buttonRef = useRef<HTMLDivElement>(null);
   const angle = useMouseAngle(buttonRef);
 
-  const project = content.projects.find(p => String(p.id) === String(id));
+  // Busca projeto pelo slug
+  const project = content.projects.find(p => {
+    const projectSlug = p.title
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+    return projectSlug === slug;
+  });
 
   // Função para calcular luminância e determinar cor do texto
   const getTextColor = (hexColor: string): string => {
@@ -41,7 +50,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [id]);
+  }, [slug]);
 
   if (!project) {
     return (
@@ -109,6 +118,79 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
       {/* Grid de imagens e textos */}
       <section className="w-full px-4 sm:px-6 md:px-12 pb-24">
         <div className="projects-grid">
+
+          {/* Vídeo do projeto Palae com overlay */}
+          {project.id === 4 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              id="video-container"
+              className="w-full rounded-2xl overflow-hidden relative transition-all duration-500"
+              style={{ 
+                backgroundColor: `${textColor}10`,
+                aspectRatio: '9/16',
+                gridRow: 'span 2'
+              }}
+            >
+              <video
+                id="palae-video"
+                src="/Docu-Case-Palae.mp4"
+                className="w-full h-full object-contain"
+                controls
+                playsInline
+                preload="metadata"
+                onPlay={(e) => {
+                  const overlay = document.getElementById('video-overlay');
+                  if (overlay) overlay.style.display = 'none';
+                }}
+              >
+                Seu navegador não suporta vídeos.
+              </video>
+
+              {/* Overlay com texto e botão */}
+              <div
+                id="video-overlay"
+                className="absolute inset-0 flex flex-col items-start justify-start p-8 md:p-12 cursor-pointer transition-opacity duration-300"
+                style={{ backgroundColor: `${project.color}80` }}
+                onClick={() => {
+                  const video = document.getElementById('palae-video') as HTMLVideoElement;
+                  if (video) {
+                    video.play();
+                  }
+                }}
+              >
+                <div className="max-w-md">
+                  <h2 
+                    className="text-2xl md:text-3xl font-bold mb-4 leading-tight"
+                    style={{ color: textColor }}
+                  >
+                    Vídeo: Documentário do processo criativo
+                  </h2>
+                  <p 
+                    className="text-base md:text-lg leading-relaxed mb-8"
+                    style={{ color: textColor, opacity: 0.9 }}
+                  >
+                    Vídeo editado, filmado e produzido por mim para te guiar através do meu processo criativo, desde a concepção até a execução final do projeto.
+                  </p>
+                  <button
+                    className="px-8 py-4 border-2 font-sans text-sm font-bold rounded-full flex items-center gap-2 uppercase transition-all duration-300 hover:scale-105"
+                    style={{
+                      backgroundColor: textColor,
+                      borderColor: textColor,
+                      color: project.color
+                    }}
+                  >
+                    Ver o vídeo
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polygon points="5 3 19 12 5 21 5 3" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
 
           {project.images?.gallery.map((imageSrc, index) => {
             const [isWide, setIsWide] = React.useState(false);
@@ -252,16 +334,24 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
       <section className="w-full px-4 sm:px-6 md:px-12 pb-24">
         <div className="w-full pt-4 md:pt-6">
           {(() => {
-            const nextId = project.id < content.projects.length ? project.id + 1 : 1;
-            const nextProject = content.projects.find(p => p.id === nextId);
+            const currentIndex = content.projects.findIndex(p => p.id === project.id);
+            const nextIndex = (currentIndex + 1) % content.projects.length;
+            const nextProject = content.projects[nextIndex];
 
             if (!nextProject) return null;
+
+            const nextSlug = nextProject.title
+              .toLowerCase()
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
+              .replace(/[^a-z0-9]+/g, '-')
+              .replace(/^-+|-+$/g, '');
 
             const [isHovered, setIsHovered] = React.useState(false);
 
             return (
               <motion.button
-                onClick={() => navigate(`/project/${nextId}`)}
+                onClick={() => navigate(`/${nextSlug}`)}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 className="group relative w-full rounded-2xl overflow-hidden block"

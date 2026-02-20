@@ -47,11 +47,12 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
       style={{
         paddingTop: containerPadding,
         paddingBottom: containerPadding,
-        borderBottomColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+        borderBottomColor: 'transparent',
         borderBottomWidth: 0
       }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-white/90 dark:bg-stone-900/90 backdrop-blur-md' : 'bg-transparent'
-        }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled ? 'bg-white/70 dark:bg-stone-900/70 backdrop-blur-xl' : 'bg-transparent'
+      }`}
     >
       {/* Container interno com padding fixo */}
       <div className="w-full px-4 md:px-12 flex justify-between items-center gap-4">

@@ -93,7 +93,7 @@ const App: React.FC = () => {
           >
             <Routes>
               <Route path="/" element={<Home content={currentContent} />} />
-              <Route path="/project/:id" element={<ProjectDetail content={currentContent} />} />
+              <Route path="/:slug" element={<ProjectDetail content={currentContent} />} />
             </Routes>
           </motion.main>
         </AnimatePresence>

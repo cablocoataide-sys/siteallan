@@ -15,7 +15,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, viewProjectLa
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/project/${project.id}`);
+    // Cria slug do título (lowercase, remove acentos, substitui espaços por hífen)
+    const slug = project.title
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+    navigate(`/${slug}`);
   };
 
   const variants = {
