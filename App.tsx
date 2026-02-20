@@ -74,6 +74,17 @@ const AppContent: React.FC = () => {
 
   const { projectColor, projectTextColor } = useProjectContext();
 
+  // Mostra loading enquanto carrega os projetos
+  if (isLoading) {
+    return (
+      <div className="min-h-screen w-full bg-stone-50 dark:bg-stone-950 flex items-center justify-center">
+        <div className="text-stone-900 dark:text-stone-50 text-xl font-sans">
+          Carregando...
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen w-full bg-stone-50 dark:bg-stone-950 selection:bg-[#0000FF] selection:text-white transition-all duration-300">
       <Header

@@ -345,35 +345,27 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content, theme }) => {
         <motion.div
           className="group relative w-full rounded-2xl overflow-hidden cursor-pointer"
           onClick={() => window.open('https://wa.me/5543996312386', '_blank')}
-          initial={{ backgroundColor: ctaColor }}
-          whileHover={{
-            backgroundColor: ctaTextColor,
-            transition: { duration: 0.7, ease: [0.19, 1, 0.22, 1] }
-          }}
-          animate={{
-            backgroundColor: ctaColor,
-            transition: { duration: 0.7, ease: [0.19, 1, 0.22, 1] }
-          }}
+          style={{ backgroundColor: ctaColor }}
         >
           {/* Conteúdo */}
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between min-h-[300px] md:min-h-[400px] p-8 md:p-16 text-center md:text-left">
             <div>
               <span 
-                className="text-sm md:text-base font-sans uppercase tracking-widest mb-4 block transition-all duration-700"
+                className="text-sm md:text-base font-sans uppercase tracking-widest mb-4 block transition-all duration-700 group-hover:opacity-90"
                 style={{ color: ctaTextColor, opacity: 0.7 }}
               >
                 {content.contactLabel}
               </span>
 
               <h2 
-                className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-[1.05] tracking-tighter transition-colors duration-700"
+                className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-[1.05] tracking-tighter transition-colors duration-700 group-hover:text-black dark:group-hover:text-white"
                 style={{ color: ctaTextColor }}
               >
                 {content.contactHeading}
               </h2>
 
               <p 
-                className="text-2xl md:text-3xl font-bold leading-[1.1] tracking-tight transition-all duration-700"
+                className="text-2xl md:text-3xl font-bold leading-[1.1] tracking-tight transition-all duration-700 group-hover:opacity-100"
                 style={{ color: ctaTextColor, opacity: 0.9 }}
               >
                 {content.contactSubheading}
@@ -383,14 +375,14 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content, theme }) => {
             {/* Botão com setinha que segue o mouse */}
             <div
               ref={buttonRef}
-              className="mt-8 md:mt-0 flex items-center justify-center gap-4 px-8 py-5 border-2 rounded-full transition-all duration-300"
+              className="mt-8 md:mt-0 flex items-center justify-center gap-4 px-8 py-5 border-2 rounded-full transition-all duration-300 group-hover:bg-black group-hover:border-black dark:group-hover:bg-white dark:group-hover:border-white"
               style={{
                 backgroundColor: ctaTextColor,
                 borderColor: ctaTextColor
               }}
             >
               <span 
-                className="text-lg md:text-xl font-bold font-sans transition-colors duration-300"
+                className="text-lg md:text-xl font-bold font-sans transition-colors duration-300 group-hover:text-white dark:group-hover:text-black"
                 style={{ color: ctaColor }}
               >
                 {content.ctaButton}
@@ -409,7 +401,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content, theme }) => {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   style={{ color: ctaColor }}
-                  className="transition-colors duration-300"
+                  className="transition-colors duration-300 group-hover:text-white dark:group-hover:text-black"
                 >
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
