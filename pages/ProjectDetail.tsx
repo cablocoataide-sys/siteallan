@@ -171,13 +171,13 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content, theme }) => {
                     className="text-2xl md:text-3xl font-bold mb-4 leading-tight"
                     style={{ color: textColor }}
                   >
-                    Vídeo: Documentário do processo criativo
+                    {content.videoTitle}
                   </h2>
                   <p 
                     className="text-base md:text-lg leading-relaxed mb-8"
                     style={{ color: textColor, opacity: 0.9 }}
                   >
-                    Vídeo editado, filmado e produzido por mim para te guiar através do meu processo criativo, desde a concepção até a execução final do projeto.
+                    {content.videoDescription}
                   </p>
                   <button
                     className="px-8 py-4 border-2 font-sans text-sm font-bold rounded-full flex items-center gap-2 uppercase transition-all duration-300 hover:scale-105"
@@ -187,7 +187,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content, theme }) => {
                       color: projectColor
                     }}
                   >
-                    Ver o vídeo
+                    {content.videoButton}
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <polygon points="5 3 19 12 5 21 5 3" />
                     </svg>

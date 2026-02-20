@@ -37,7 +37,10 @@ export const CONTENT: Record<'en' | 'pt', Content> = {
     contactHeading: "Liked the project?",
     contactSubheading: "Let's talk about yours.",
     contactLabel: "Let's work together",
-    back: "Back"
+    back: "Back",
+    videoTitle: "Video: Creative process documentary",
+    videoDescription: "Video edited, filmed and produced by me to guide you through my creative process, from conception to final execution of the project.",
+    videoButton: "Watch video"
   },
   pt: {
     role: "Product & Brand Designer",
@@ -63,6 +66,9 @@ export const CONTENT: Record<'en' | 'pt', Content> = {
     contactHeading: "Gostou do projeto?",
     contactSubheading: "Vamos conversar sobre o seu.",
     contactLabel: "Vamos trabalhar juntos",
-    back: "Voltar"
+    back: "Voltar",
+    videoTitle: "Vídeo: Documentário do processo criativo",
+    videoDescription: "Vídeo editado, filmado e produzido por mim para te guiar através do meu processo criativo, desde a concepção até a execução final do projeto.",
+    videoButton: "Ver o vídeo"
   }
 };

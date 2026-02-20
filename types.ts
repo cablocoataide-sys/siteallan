@@ -45,4 +45,7 @@ export interface Content {
   contactSubheading: string;
   contactLabel: string;
   back: string;
+  videoTitle: string;
+  videoDescription: string;
+  videoButton: string;
 }
