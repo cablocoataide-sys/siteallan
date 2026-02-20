@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
-import { Content } from '../types';
+import { Content, Project } from '../types';
 import { useMouseAngle } from '../hooks/useMouseAngle';
 import { useProjectContext } from '../contexts/ProjectContext';
 import { generateDarkColor, getTextColor, invertColor } from '../utils/colorTheme';
@@ -11,6 +11,79 @@ interface ProjectDetailProps {
   content: Content;
   theme: 'light' | 'dark';
 }
+
+// Componente separado para o card do próximo projeto
+const NextProjectCard: React.FC<{
+  nextProject: Project;
+  nextSlug: string;
+  content: Content;
+  navigate: (path: string) => void;
+}> = ({ nextProject, nextSlug, content, navigate }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleClick = () => {
+    navigate(`/${nextSlug}`);
+  };
+
+  return (
+    <motion.button
+      onClick={handleClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="group relative w-full rounded-2xl overflow-hidden block"
+    >
+      {/* Imagem de preview */}
+      <div className="absolute inset-0">
+        <img
+          src={nextProject.image}
+          alt={nextProject.title}
+          crossOrigin="anonymous"
+          className="w-full h-full object-cover"
+        />
+        {/* Overlay escuro sobre a imagem */}
+        <div className="absolute inset-0 bg-black/40" />
+      </div>
+
+      {/* Camada de cor com fade progressivo */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        animate={{ opacity: isHovered ? 1 : 0 }}
+        transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
+        style={{ backgroundColor: nextProject.color }}
+      />
+
+      {/* Conteúdo */}
+      <div className="relative z-10 flex flex-col items-center md:items-start justify-center min-h-[400px] md:min-h-[500px] p-8 md:p-16 text-center md:text-left">
+        <span className="text-sm md:text-base font-sans uppercase tracking-widest text-white/70 group-hover:text-white/90 mb-4 transition-colors duration-700">
+          {content.nextProject}
+        </span>
+        <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.05] tracking-tighter">
+          {nextProject.title}
+        </h2>
+
+        {/* Tags */}
+        <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-8">
+          {nextProject.tags.map((tag, i) => (
+            <span
+              key={i}
+              className="text-xs md:text-sm font-sans uppercase tracking-widest border border-white/40 group-hover:border-white/60 px-3 py-1 rounded-full text-white transition-all duration-700"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        {/* Botão Ver projeto - igual da home */}
+        <div className="px-8 py-4 bg-white border-2 border-white text-black font-sans text-sm font-bold rounded-full flex items-center gap-2 uppercase hover:bg-transparent hover:text-white transition-all duration-300">
+          {content.viewProject}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M7 17L17 7M17 7H7M17 7v10" />
+          </svg>
+        </div>
+      </div>
+    </motion.button>
+  );
+};
 
 const ProjectDetail: React.FC<ProjectDetailProps> = ({ content, theme }) => {
   const { slug } = useParams<{ slug: string }>();
@@ -369,65 +442,13 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content, theme }) => {
               .replace(/[^a-z0-9]+/g, '-')
               .replace(/^-+|-+$/g, '');
 
-            const [isHovered, setIsHovered] = React.useState(false);
-
             return (
-              <motion.button
-                onClick={() => navigate(`/${nextSlug}`)}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                className="group relative w-full rounded-2xl overflow-hidden block"
-              >
-                {/* Imagem de preview */}
-                <div className="absolute inset-0">
-                  <img
-                    src={nextProject.image}
-                    alt={nextProject.title}
-                    crossOrigin="anonymous"
-                    className="w-full h-full object-cover"
-                  />
-                  {/* Overlay escuro sobre a imagem */}
-                  <div className="absolute inset-0 bg-black/40" />
-                </div>
-
-                {/* Camada de cor com fade progressivo */}
-                <motion.div
-                  className="absolute inset-0 pointer-events-none"
-                  animate={{ opacity: isHovered ? 1 : 0 }}
-                  transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
-                  style={{ backgroundColor: nextProject.color }}
-                />
-
-                {/* Conteúdo */}
-                <div className="relative z-10 flex flex-col items-center md:items-start justify-center min-h-[400px] md:min-h-[500px] p-8 md:p-16 text-center md:text-left">
-                  <span className="text-sm md:text-base font-sans uppercase tracking-widest text-white/70 group-hover:text-white/90 mb-4 transition-colors duration-700">
-                    {content.nextProject}
-                  </span>
-                  <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.05] tracking-tighter">
-                    {nextProject.title}
-                  </h2>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-8">
-                    {nextProject.tags.map((tag, i) => (
-                      <span
-                        key={i}
-                        className="text-xs md:text-sm font-sans uppercase tracking-widest border border-white/40 group-hover:border-white/60 px-3 py-1 rounded-full text-white transition-all duration-700"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Botão Ver projeto - igual da home */}
-                  <div className="px-8 py-4 bg-white border-2 border-white text-black font-sans text-sm font-bold rounded-full flex items-center gap-2 uppercase hover:bg-transparent hover:text-white transition-all duration-300">
-                    {content.viewProject}
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M7 17L17 7M17 7H7M17 7v10" />
-                    </svg>
-                  </div>
-                </div>
-              </motion.button>
+              <NextProjectCard
+                nextProject={nextProject}
+                nextSlug={nextSlug}
+                content={content}
+                navigate={navigate}
+              />
             );
           })()}
         </div>
