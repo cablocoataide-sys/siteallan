@@ -111,8 +111,17 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
         <div className="projects-grid">
 
           {project.images?.gallery.map((imageSrc, index) => {
-            const isWide = imageSrc.includes('wide');
-            const isEven = index % 2 === 0;
+            const [isWide, setIsWide] = React.useState(false);
+
+            // Detecta se a imagem é wide carregando suas dimensões
+            React.useEffect(() => {
+              const img = new Image();
+              img.onload = () => {
+                // Considera wide se a largura for pelo menos 1.5x a altura
+                setIsWide(img.width / img.height >= 1.5);
+              };
+              img.src = imageSrc;
+            }, [imageSrc]);
 
             return (
               <motion.div
@@ -121,12 +130,14 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content }) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className={`w-full ${isWide ? 'aspect-[2/1] md:col-span-2' : 'aspect-square'} rounded-2xl overflow-hidden bg-stone-200 dark:bg-stone-800`}
+                className={`w-full ${isWide ? 'aspect-[2/1] md:col-span-2' : 'aspect-square'} rounded-2xl overflow-hidden`}
+                style={{ backgroundColor: `${textColor}10` }}
               >
                 <img
                   src={imageSrc}
                   alt={`${project.title} - ${index + 1}`}
                   className="w-full h-full object-cover"
+                  crossOrigin="anonymous"
                 />
               </motion.div>
             );
