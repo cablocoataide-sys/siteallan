@@ -10,12 +10,20 @@
         "pt": "Desenvolvimento de naming e identidade visual para Palae, marca de queijo vegetal. O projeto partiu do reposicionamento da marca e da necessidade de um nome que contemplasse sua nova essência, resultando em um sistema visual completo, do nome à aplicação.",
         "en": "Naming and visual identity development for Palae, a plant-based cheese brand. The project started from a brand repositioning and the need for a name that could carry its new essence, resulting in a complete visual system, from naming to application."
       },
-      "tags": [
-        "Identidade Visual",
-        "Naming",
-        "Direção de Arte",
-        "Fotografia"
-      ],
+      "tags": {
+        "pt": [
+          "Identidade Visual",
+          "Naming",
+          "Direção de Arte",
+          "Fotografia"
+        ],
+        "en": [
+          "Identidade Visual",
+          "Naming",
+          "Direção de Arte",
+          "Fotografia"
+        ]
+      },
       "image": "https://res.cloudinary.com/dbavi5eby/image/upload/v1771121171/Snap_Insta_to_468002073_18481221049028995_4181950221484231723_n_32c8fbcc81.jpg",
       "color": "#7a684d",
       "images": {
@@ -50,7 +58,10 @@
         "pt": "Testelsidjh",
         "en": "Test"
       },
-      "tags": [],
+      "tags": {
+        "pt": [],
+        "en": []
+      },
       "image": "https://res.cloudinary.com/dbavi5eby/image/upload/v1771443473/Captura_de_Tela_2026_02_18_as_11_29_56_bd993d58ad.png",
       "color": "#4c674a",
       "images": {
