@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Project } from '../types';
 import { ArrowUpRight } from 'lucide-react';
+import { getTextColor } from '../utils/colorTheme';
 
 interface ProjectCardProps {
   project: Project;
@@ -13,6 +14,10 @@ interface ProjectCardProps {
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, viewProjectLabel }) => {
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
+
+  // Calcula a cor do texto baseada no contraste com a cor do projeto
+  const textColor = getTextColor(project.color);
+  const borderColor = `${textColor}80`; // 50% opacidade
 
   const handleClick = () => {
     // Cria slug do título (lowercase, remove acentos, substitui espaços por hífen)
@@ -94,7 +99,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, viewProjectLa
           ease: [0.65, 0, 0.35, 1]
         }}
       >
-        <div className="text-white flex flex-col items-center">
+        <div className="flex flex-col items-center" style={{ color: textColor }}>
           <h3 className="text-3xl md:text-5xl font-sans font-bold mb-6 leading-[1.05] tracking-tighter">
             {project.title}
           </h3>
@@ -103,14 +108,25 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, viewProjectLa
             {project.tags.map((tag, i) => (
               <span
                 key={i}
-                className="text-xs md:text-sm font-sans uppercase tracking-widest border border-white/50 px-3 py-1 rounded-full backdrop-blur-sm bg-white/5"
+                className="text-xs md:text-sm font-sans uppercase tracking-widest px-3 py-1 rounded-full backdrop-blur-sm"
+                style={{ 
+                  border: `1px solid ${borderColor}`,
+                  backgroundColor: `${textColor}0D`
+                }}
               >
                 {tag}
               </span>
             ))}
           </div>
 
-          <button className="px-8 py-4 bg-white border-2 border-white text-black font-sans text-sm font-bold rounded-full flex items-center gap-2 uppercase transition-all duration-300 hover:bg-transparent hover:text-white">
+          <button 
+            className="px-8 py-4 border-2 font-sans text-sm font-bold rounded-full flex items-center gap-2 uppercase transition-all duration-300 hover:opacity-80"
+            style={{
+              backgroundColor: textColor,
+              borderColor: textColor,
+              color: project.color
+            }}
+          >
             {viewProjectLabel}
             <ArrowUpRight size={16} />
           </button>
