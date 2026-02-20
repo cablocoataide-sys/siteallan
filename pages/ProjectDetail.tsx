@@ -359,8 +359,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content, theme }) => {
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between min-h-[300px] md:min-h-[400px] p-8 md:p-16 text-center md:text-left">
             <div>
               <span 
-                className="text-sm md:text-base font-sans uppercase tracking-widest mb-4 block transition-colors duration-700 group-hover:opacity-90"
-                style={{ color: `${ctaTextColor}B3` }}
+                className="text-sm md:text-base font-sans uppercase tracking-widest mb-4 block transition-all duration-700"
+                style={{ color: ctaTextColor, opacity: 0.7 }}
               >
                 {content.contactLabel}
               </span>
@@ -373,8 +373,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content, theme }) => {
               </h2>
 
               <p 
-                className="text-2xl md:text-3xl font-bold leading-[1.1] tracking-tight transition-colors duration-700"
-                style={{ color: `${ctaTextColor}E6` }}
+                className="text-2xl md:text-3xl font-bold leading-[1.1] tracking-tight transition-all duration-700"
+                style={{ color: ctaTextColor, opacity: 0.9 }}
               >
                 {content.contactSubheading}
               </p>
