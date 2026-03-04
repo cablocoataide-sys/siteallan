@@ -52,6 +52,41 @@
       }
     },
     {
+      "id": 18,
+      "title": {
+        "pt": "MV",
+        "en": "MV"
+      },
+      "description": {
+        "pt": "Desenvolvimento de identidade visual para o Dr. Marcus Vinicius de Morais, médico especialista em tratamento da dor em Londrina. O projeto traduziu graficamente a precisão e o cuidado de uma marca médica pessoal, resultando em um símbolo construído a partir das iniciais MV.",
+        "en": "Visual identity development for Dr. Marcus Vinicius de Morais, a pain management specialist based in Londrina, Brazil. The project translated the precision and care of a personal medical brand into a visual system built from the initials MV."
+      },
+      "tags": {
+        "pt": [
+          "Identidade Visual",
+          "Medicina"
+        ],
+        "en": [
+          "Identidade Visual",
+          "Medicina"
+        ]
+      },
+      "image": "https://res.cloudinary.com/dbavi5eby/image/upload/v1772653690/Frame_2_ba9dc4ea74.jpg",
+      "color": "#909090",
+      "images": {
+        "thumbnail": "https://res.cloudinary.com/dbavi5eby/image/upload/v1772653690/Frame_2_ba9dc4ea74.jpg",
+        "gallery": []
+      },
+      "about": {
+        "pt": "O símbolo nasce da sobreposição das iniciais M e V, onde traços cheios e orgânicos se combinam a linhas finas e contínuas. A forma remete a ondas e ao movimento da água, atributo central do projeto, enquanto o contraste entre cheio e vazio traduz a dualidade entre técnica e humanidade. Um símbolo refinado que comunica cuidado sem abrir mão da personalidade.",
+        "en": "The symbol emerges from the overlap of the initials M and V, where bold organic strokes combine with thin, continuous lines. The form evokes waves and the movement of water, a central attribute of the project, while the contrast between filled and empty translates the duality between technique and humanity. A refined symbol that communicates care without sacrificing personality."
+      },
+      "results": {
+        "pt": "Uma identidade que posiciona o médico com refinamento e presença, aplicada com consistência em papelaria, sinalização e meios digitais. O símbolo ganha força em qualquer escala e carrega a seriedade e o acolhimento que uma marca de saúde pessoal precisa transmitir.",
+        "en": "An identity that positions the physician with refinement and presence, applied consistently across stationery, signage, and digital media. The symbol holds its strength at any scale, carrying the seriousness and warmth that a personal healthcare brand needs to convey."
+      }
+    },
+    {
       "id": 10,
       "title": {
         "pt": "Gautier & Munhoz",
