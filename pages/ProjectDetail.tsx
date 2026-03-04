@@ -198,7 +198,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content, theme }) => {
         <div className="projects-grid">
 
           {/* Vídeo do projeto Palae com overlay */}
-          {project.id === 4 && (
+          {project.title.toLowerCase() === 'palae' && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}

@@ -1,7 +1,7 @@
 {
   "projects": [
     {
-      "id": 4,
+      "id": 11,
       "title": {
         "pt": "Palae",
         "en": "Palae"
@@ -29,6 +29,9 @@
       "images": {
         "thumbnail": "https://res.cloudinary.com/dbavi5eby/image/upload/v1771121171/Snap_Insta_to_468002073_18481221049028995_4181950221484231723_n_32c8fbcc81.jpg",
         "gallery": [
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1772630615/01_Box_on_Chair_Mockup_1_55b1fe73d6.jpg",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1772630616/01_Free_Bakery_Branding_Mockup_1_0f275388a0.jpg",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1772630616/Slide_16_9_25_99e4b7b9b3.jpg",
           "https://res.cloudinary.com/dbavi5eby/image/upload/v1771121201/Snap_Insta_to_468287603_18481221418028995_901789783581023166_n_2e18bea887.jpg",
           "https://res.cloudinary.com/dbavi5eby/image/upload/v1771121201/Snap_Insta_to_468094081_18481221151028995_6566193296392510420_n_c477f6ea9e.jpg",
           "https://res.cloudinary.com/dbavi5eby/image/upload/v1771121205/Snap_Insta_to_468011970_18481221316028995_754923863862983745_n_4a7b048115.jpg",
@@ -49,34 +52,57 @@
       }
     },
     {
-      "id": 8,
+      "id": 10,
       "title": {
         "pt": "Gautier & Munhoz",
         "en": "Gautier & Munhoz"
       },
       "description": {
-        "pt": "Testelsidjh",
-        "en": "Test"
+        "pt": "Identidade visual desenvolvida para um escritório jurídico que une sofisticação e estratégia. O projeto traduz atributos como refinamento, cuidado e perspicácia em um sistema visual sóbrio, contemporâneo e altamente profissional.",
+        "en": "Brand identity developed for a law firm that blends sophistication with strategic thinking. The project translates refineme"
       },
       "tags": {
-        "pt": [],
-        "en": []
+        "pt": [
+          "identidade visual",
+          "branding",
+          "logotipo",
+          "sistema visual",
+          "direção de arte",
+          "tipografia"
+        ],
+        "en": [
+          "brand identity",
+          "branding",
+          "logo design",
+          "visual system",
+          "art direction",
+          "typography"
+        ]
       },
       "image": "https://res.cloudinary.com/dbavi5eby/image/upload/v1771443473/Captura_de_Tela_2026_02_18_as_11_29_56_bd993d58ad.png",
       "color": "#4c674a",
       "images": {
         "thumbnail": "https://res.cloudinary.com/dbavi5eby/image/upload/v1771443473/Captura_de_Tela_2026_02_18_as_11_29_56_bd993d58ad.png",
         "gallery": [
-          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771555555/Captura_de_Tela_2026_02_18_as_11_30_21_afaa79912d.png"
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771610923/Captura_de_Tela_2026_02_18_as_11_30_21_acdddab4dc.png",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771611525/Captura_de_Tela_2026_02_18_as_11_30_13_1a372e0498.png",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771611527/Captura_de_Tela_2026_02_18_as_11_32_33_819885dda0.png",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771611691/Captura_de_Tela_2026_02_18_as_11_30_28_61a908a832.png",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771611694/Captura_de_Tela_2026_02_18_as_11_30_36_1571201cb9.png",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771611700/Captura_de_Tela_2026_02_18_as_11_31_21_599bf0d21d.png",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771612360/Captura_de_Tela_2026_02_18_as_11_32_11_d8ddbbc94b.png",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771612381/Captura_de_Tela_2026_02_18_as_11_32_24_76092fe279.png",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771612382/Captura_de_Tela_2026_02_18_as_11_32_50_30c78c113e.png",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1771612384/Captura_de_Tela_2026_02_18_as_11_32_18_e532a168cd.png"
         ]
       },
       "about": {
-        "pt": "",
-        "en": ""
+        "pt": "O desafio foi posicionar Gautier & Munhoz como um escritório que equilibra técnica e sensibilidade.\n\nPartimos de atributos claros: refinado, cuidadoso, perspicaz, engajado e encantador. A construção visual buscou traduzir autoridade sem rigidez, proximidade sem informalidade.\n\nA tipografia, a paleta sóbria e os detalhes de composição reforçam precisão e atenção aos detalhes — qualidades essenciais no universo jurídico. O resultado é uma marca que comunica confiança com elegância.",
+        "en": "The challenge was to position Gautier & Munhoz as a firm that balances technical expertise with sensitivity.\n\nWe defined clear core attributes: refined, careful, insightful, engaged, and charming. The visual direction aimed to express authority without rigidity and approachability without informality.\n\nTypography, a restrained color palette, and thoughtful composition details reinforce precision and attention to detail — essential qualities in the legal field. The result is a brand that communicates trust with elegance."
       },
       "results": {
-        "pt": "",
-        "en": ""
+        "pt": "• Posicionamento mais sofisticado e coerente com o nível de atuação do escritório\n• Identidade visual consistente para aplicações digitais e institucionais\n• Percepção reforçada de autoridade, estratégia e cuidado\n\nA marca passa a sustentar uma presença sólida e diferenciada no mercado jurídico.",
+        "en": "• A more sophisticated positioning aligned with the firm’s level of practice\n• A consistent visual identity across digital and institutional touchpoints\n• Stronger perception of authority, strategy, and attention to detail\n\nThe brand now supports a solid and differentiated presence in the legal market."
       }
     }
   ]
