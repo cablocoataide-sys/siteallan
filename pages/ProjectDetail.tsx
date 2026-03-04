@@ -6,6 +6,7 @@ import { Content, Project } from '../types';
 import { useMouseAngle } from '../hooks/useMouseAngle';
 import { useProjectContext } from '../contexts/ProjectContext';
 import { generateDarkColor, getTextColor, invertColor } from '../utils/colorTheme';
+import { trackProjectView, trackContactClick, trackVideoPlay } from '../utils/analytics';
 
 interface ProjectDetailProps {
   content: Content;
@@ -122,6 +123,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content, theme }) => {
     // Define as cores do projeto no contexto
     if (project) {
       setProjectColors(projectColor, textColor);
+      // Rastreia visualização do projeto
+      trackProjectView(project.title);
     }
     
     // Limpa as cores quando sair da página
@@ -222,6 +225,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content, theme }) => {
                 onPlay={(e) => {
                   const overlay = document.getElementById('video-overlay');
                   if (overlay) overlay.style.display = 'none';
+                  trackVideoPlay(project.title);
                 }}
               >
                 Seu navegador não suporta vídeos.
@@ -344,7 +348,10 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ content, theme }) => {
       <section className="w-full px-4 sm:px-6 md:px-12 pb-6 md:pb-8">
         <motion.div
           className="group relative w-full rounded-2xl overflow-hidden cursor-pointer"
-          onClick={() => window.open('https://wa.me/5543996312386', '_blank')}
+          onClick={() => {
+            trackContactClick('project_cta');
+            window.open('https://wa.me/5543996312386', '_blank');
+          }}
           style={{ backgroundColor: ctaColor }}
         >
           {/* Conteúdo */}

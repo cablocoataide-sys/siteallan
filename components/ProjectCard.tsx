@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Project } from '../types';
 import { ArrowUpRight } from 'lucide-react';
 import { getTextColor } from '../utils/colorTheme';
+import { trackProjectClick } from '../utils/analytics';
 
 interface ProjectCardProps {
   project: Project;
@@ -27,6 +28,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, viewProjectLa
       .replace(/[\u0300-\u036f]/g, '')
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '');
+    
+    // Rastreia clique no projeto
+    trackProjectClick(project.title);
+    
     navigate(`/${slug}`);
   };
 

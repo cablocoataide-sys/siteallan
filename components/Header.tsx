@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Moon, Sun } from 'lucide-react';
 import { Theme, Language, Content } from '../types';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { trackLanguageChange, trackThemeChange } from '../utils/analytics';
 // AnimatePresence still used for h1 text transition
 
 interface HeaderProps {
@@ -137,7 +138,10 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
           <div className={segmentStyle} style={{ borderColor, backgroundColor: `${textColorValue}0D` }}>
             <button
               type="button"
-              onClick={() => setLang('pt')}
+              onClick={() => {
+                setLang('pt');
+                trackLanguageChange('pt');
+              }}
               className={segmentOption(lang === 'pt')}
               style={lang === 'pt' ? { backgroundColor: activeBg, color: textColorValue } : { color: `${textColorValue}99` }}
               aria-pressed={lang === 'pt'}
@@ -146,7 +150,10 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
             </button>
             <button
               type="button"
-              onClick={() => setLang('en')}
+              onClick={() => {
+                setLang('en');
+                trackLanguageChange('en');
+              }}
               className={segmentOption(lang === 'en')}
               style={lang === 'en' ? { backgroundColor: activeBg, color: textColorValue } : { color: `${textColorValue}99` }}
               aria-pressed={lang === 'en'}
@@ -159,7 +166,12 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
           <div className={segmentStyle} style={{ borderColor, backgroundColor: `${textColorValue}0D` }}>
             <button
               type="button"
-              onClick={() => theme !== 'light' && toggleTheme()}
+              onClick={() => {
+                if (theme !== 'light') {
+                  toggleTheme();
+                  trackThemeChange('light');
+                }
+              }}
               className={segmentOption(theme === 'light')}
               style={theme === 'light' ? { backgroundColor: activeBg, color: textColorValue } : { color: `${textColorValue}99` }}
               aria-pressed={theme === 'light'}
@@ -169,7 +181,12 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, lang, setLang, cont
             </button>
             <button
               type="button"
-              onClick={() => theme !== 'dark' && toggleTheme()}
+              onClick={() => {
+                if (theme !== 'dark') {
+                  toggleTheme();
+                  trackThemeChange('dark');
+                }
+              }}
               className={segmentOption(theme === 'dark')}
               style={theme === 'dark' ? { backgroundColor: activeBg, color: textColorValue } : { color: `${textColorValue}99` }}
               aria-pressed={theme === 'dark'}

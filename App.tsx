@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import Header from './components/Header';
 import Home from './pages/Home';
@@ -8,6 +8,7 @@ import { CONTENT } from './constants';
 import { loadProjects } from './utils/loadProjects';
 import { Theme, Language, Content } from './types';
 import { ProjectProvider, useProjectContext } from './contexts/ProjectContext';
+import { initGA, trackPageView } from './utils/analytics';
 
 const AppContent: React.FC = () => {
   // Inicializa tema considerando:
@@ -35,6 +36,17 @@ const AppContent: React.FC = () => {
   const [lang, setLang] = useState<Language>('pt');
   const [currentContent, setCurrentContent] = useState<Content>(CONTENT[lang]);
   const [isLoading, setIsLoading] = useState(true);
+  const location = useLocation();
+
+  // Inicializa Google Analytics
+  useEffect(() => {
+    initGA();
+  }, []);
+
+  // Rastreia mudanças de página
+  useEffect(() => {
+    trackPageView(location.pathname);
+  }, [location]);
 
   // Carrega projetos do JSON
   useEffect(() => {

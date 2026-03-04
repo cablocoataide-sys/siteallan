@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Content } from '../types';
 import { useMouseAngle } from '../hooks/useMouseAngle';
+import { trackContactClick } from '../utils/analytics';
 
 interface HeroProps {
   content: Content;
@@ -69,7 +70,10 @@ const Hero: React.FC<HeroProps> = ({ content }) => {
                 {/* CTA Button */}
                 <button 
                   ref={buttonRef}
-                  onClick={() => window.open('https://wa.me/5543996312386', '_blank')}
+                  onClick={() => {
+                    trackContactClick('hero_cta');
+                    window.open('https://wa.me/5543996312386', '_blank');
+                  }}
                   className="group relative w-full flex items-center justify-between px-6 py-6 border border-stone-200 dark:border-stone-800 rounded-full overflow-hidden hover:border-[#0000FF] transition-colors duration-300"
                 >
                   <div className="absolute inset-0 bg-[#0000FF] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
