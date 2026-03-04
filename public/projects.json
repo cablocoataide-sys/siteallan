@@ -104,6 +104,53 @@
         "pt": "• Posicionamento mais sofisticado e coerente com o nível de atuação do escritório\n• Identidade visual consistente para aplicações digitais e institucionais\n• Percepção reforçada de autoridade, estratégia e cuidado\n\nA marca passa a sustentar uma presença sólida e diferenciada no mercado jurídico.",
         "en": "• A more sophisticated positioning aligned with the firm’s level of practice\n• A consistent visual identity across digital and institutional touchpoints\n• Stronger perception of authority, strategy, and attention to detail\n\nThe brand now supports a solid and differentiated presence in the legal market."
       }
+    },
+    {
+      "id": 14,
+      "title": {
+        "pt": "meester",
+        "en": "meester"
+      },
+      "description": {
+        "pt": "Rebranding de identidade visual da Meester, empresa de soluções em TI e comunicação em nuvem. O projeto revisitou a marca para alinhar sua expressão gráfica ao momento atual da empresa, resultando em um símbolo construído com rigor geométrico e grid.",
+        "en": "Visual identity rebranding for Meester, a company specializing in IT solutions and cloud communication. The project revisited the brand to align its visual expression with the company's current positioning, resulting in a symbol built with geometric rigor and grid structure."
+      },
+      "tags": {
+        "pt": [
+          "Rebranding",
+          "Identidade Visual",
+          "Tecnologia"
+        ],
+        "en": [
+          "Rebranding",
+          "Identidade Visual",
+          "Tecnologia"
+        ]
+      },
+      "image": "https://res.cloudinary.com/dbavi5eby/image/upload/v1772649103/00_debe5ae3f0.jpg",
+      "color": "0000ff",
+      "images": {
+        "thumbnail": "https://res.cloudinary.com/dbavi5eby/image/upload/v1772649103/00_debe5ae3f0.jpg",
+        "gallery": [
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1772649197/05_a73a7593a6.jpg",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1772649201/02_501052bbd5.jpg",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1772649206/03_0ab30bdd8e.jpg",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1772649212/08_592630a75c.jpg",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1772649205/09_ac4a396a35.jpg",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1772649206/06_c596aaebed.jpg",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1772649212/04_e44a00e51d.jpg",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1772649209/01_147be5f7c5.jpg",
+          "https://res.cloudinary.com/dbavi5eby/image/upload/v1772649211/07_76f5696d67.jpg"
+        ]
+      },
+      "about": {
+        "pt": "O símbolo nasce de um grid preciso, onde colunas e arcos se combinam para formar o M de Meester. A estrutura remete a pilares, estabilidade e arquitetura de sistemas, enquanto os arredondamentos trazem leveza e modernidade. Cada decisão construtiva tem lógica proporcional, do traço ao terminal.",
+        "en": "The symbol is built on a precise grid, where columns and arches combine to form the M of Meester. The structure references pillars, stability and systems architecture, while the rounded corners bring lightness and modernity. Every constructive decision follows proportional logic, from stroke to terminal."
+      },
+      "results": {
+        "pt": "Um rebranding que atualiza a marca sem perder sua essência. O novo símbolo comunica confiança e precisão com mais personalidade, e funciona com força em qualquer escala, pronto para representar a Meester em um mercado de tecnologia cada vez mais competitivo.",
+        "en": "A rebranding that updates the brand without losing its essence. The new symbol communicates trust and precision with more personality, holding up at any scale and ready to represent Meester in an increasingly competitive technology market."
+      }
     }
   ]
 }
